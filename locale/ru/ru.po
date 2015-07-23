@@ -1,0 +1,401 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid   ""
+msgstr  "Project-Id-Version: PACKAGE VERSION\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2011-06-28 09:54+0400\n"
+        "PO-Revision-Date: 2011-06-28 09:22+0300\n"
+        "Last-Translator: Edward V. Emelianov <eddy@sao.ru>\n"
+        "Language-Team: LANGUAGE <LL@li.org>\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=koi8-r\n"
+        "Content-Transfer-Encoding: 8bit\n"
+
+#. "\tОпции:\n"
+#: usage.c:78
+#, c-format
+msgid   "\tOptions:\n"
+msgstr  "\tОпции:\n"
+
+#. %.3f секунд до окончания экспозиции\n
+#: takepic.c:166
+#, c-format
+msgid   "%.3f seconds till exposition ends\n"
+msgstr  "%.3f секунд до окончания экспозиции\n"
+
+#. %d секунд до окончания паузы\n
+#: takepic.c:220
+#, c-format
+msgid   "%d seconds till pause ends\n"
+msgstr  "%d секунд до окончания паузы\n"
+
+#. Поле изображения: (%ld, %ld)(%ld, %ld)
+#: takepic.c:125
+#, c-format
+msgid   "Array field: (%ld, %ld)(%ld, %ld)"
+msgstr  "Поле изображения: (%ld, %ld)(%ld, %ld)"
+
+#. Начинаю экспозицию %dмс, время: %s, файл: %s.%d.%d\n
+#: takepic.c:160
+#, c-format
+msgid   "Begin exposition %dms, exptime: %s, filename: %s.%d.%d\n"
+msgstr  "Начинаю экспозицию %dмс, время: %s, файл: %s.%d.%d\n"
+
+#. Камера '%s' из домена %s
+#: takepic.c:101
+#, c-format
+msgid   "Camera '%s', domain %s"
+msgstr  "Камера '%s' из домена %s"
+
+#. Не могу открыть файл журнала статистики
+#: takepic.c:89
+msgid   "Can't open statistics log file"
+msgstr  "Не могу открыть журнал статистики"
+
+#. Не могу открыть файл журнала температур
+#: takepic.c:80
+msgid   "Can't open temperature log file"
+msgstr  "Не могу открыть журнал температур"
+
+#. Не могу сохранить файл
+#: takepic.c:199
+msgid   "Can't save file"
+msgstr  "Не могу сохранить файл"
+
+#. Захват кадра %d\n
+#: takepic.c:155
+#, c-format
+msgid   "Capture frame %d\n"
+msgstr  "Захват кадра %d\n"
+
+#. "Съемка темновых"
+#: usage.c:193
+msgid   "Dark frames"
+msgstr  "Съемка темновых"
+
+#. "Время экспозиции: %dмс"
+#: usage.c:296
+#, c-format
+msgid   "Exposure time: %dms"
+msgstr  "Время экспозиции: %dмс"
+
+#. Видимое поле: %s
+#: takepic.c:120
+#, c-format
+msgid   "Field of view: %s"
+msgstr  "Видимое поле: %s"
+
+#. Файл записан в '%s'
+#: takepic.c:203
+#, c-format
+msgid   "File saved as '%s'"
+msgstr  "Файл записан в '%s'"
+
+#. Полное журналирование статистики без сохранения изображений
+#: usage.c:225
+msgid   "Full statistics logging without saving images"
+msgstr  "Полное журналирование статистики без сохранения изображений"
+
+#. Апп. версия: %ld
+#: takepic.c:110
+#, c-format
+msgid   "HW revision: %ld"
+msgstr  "Апп. версия: %ld"
+
+#. "Гор. биннинг: %d"
+#: usage.c:209
+#, c-format
+msgid   "Horisontal binning: %d"
+msgstr  "Гор. биннинг: %d"
+
+#. "Игнорирую аргумент[ы]:\n"
+#: usage.c:327
+#, c-format
+msgid   "Ignore argument[s]:\n"
+msgstr  "Игнорирую аргумент[ы]:\n"
+
+#. Статистика по изображению\n
+#: takepic.c:470
+#, c-format
+msgid   "Image stat:\n"
+msgstr  "Статистика по изображению\n"
+
+#. "Тип изображения - %s"
+#: usage.c:214
+#, c-format
+msgid   "Image type - %s"
+msgstr  "Тип изображения - %s"
+
+#. Температура (внутр.): %f
+#: takepic.c:141
+#, c-format
+msgid   "Inner temperature: %f"
+msgstr  "Температура (внутр.): %f"
+
+#. "Название прибора - %s"
+#: usage.c:219
+#, c-format
+msgid   "Instrument name - %s"
+msgstr  "Название прибора - %s"
+
+#. Версия библиотеки '%s'
+#: takepic.c:75
+#, c-format
+msgid   "Library version '%s'"
+msgstr  "Версия библиотеки '%s'"
+
+#. Модель:\t\t%s
+#: takepic.c:106
+#, c-format
+msgid   "Model:\t\t%s"
+msgstr  "Модель:\t\t%s"
+
+#. "N сбросов перед экспозицией"
+#: usage.c:87
+msgid   "N flushes before exposing"
+msgstr  "N сбросов перед экспозицией"
+
+#. Камеры не найдены!\n
+#: takepic.c:286
+msgid   "No cameras found!\n"
+msgstr  "Камеры не найдены!\n"
+
+#. "Имя объекта - %s"
+#: usage.c:243
+#, c-format
+msgid   "Object name - %s"
+msgstr  "Имя объекта - %s"
+
+#. "Наблюдатели: %s"
+#: usage.c:248
+#, c-format
+msgid   "Observers: %s"
+msgstr  "Наблюдатели: %s"
+
+#. Температура (внешн.): %f
+#: takepic.c:144
+#, c-format
+msgid   "Outern temperature: %f"
+msgstr  "Температура (внешн.): %f"
+
+#. "Нет префикса имени выходных файлов"
+#: usage.c:316
+msgid   "Output file names prefix is absent"
+msgstr  "Нет префикса имени выходных файлов"
+
+#. "Пауза: %dс"
+#: usage.c:261
+#, c-format
+msgid   "Pause: %ds"
+msgstr  "Пауза: %dс"
+
+#. Размер пикселя: %g x %g
+#: takepic.c:116
+#, c-format
+msgid   "Pixel size: %g x %g"
+msgstr  "Размер пикселя: %g x %g"
+
+#. "Автор программы: %s"
+#: usage.c:188
+#, c-format
+msgid   "Program author: %s"
+msgstr  "Автор программы: %s"
+
+#. "Название программы: %s"
+#: usage.c:253
+#, c-format
+msgid   "Program name: %s"
+msgstr  "Название программы: %s"
+
+#. Считывание изображения:
+#: takepic.c:179
+#, c-format
+msgid   "Read image: "
+msgstr  "Считывание изображения: "
+
+#. Прогр. версия: %ld
+#: takepic.c:113
+#, c-format
+msgid   "SW revision: %ld"
+msgstr  "Прогр. версия: %ld"
+
+#. "Сохранение журнала температур"
+#: usage.c:230
+msgid   "Save temperature log"
+msgstr  "Сохранение журнала температур"
+
+#. "Серия из %d кадров"
+#: usage.c:238
+#, c-format
+msgid   "Series of %d frames"
+msgstr  "Серия из %d кадров"
+
+#. "Установить температуру: %.3f"
+#: usage.c:280
+#, c-format
+msgid   "Set temperature: %.3f"
+msgstr  "Установить температуру: %.3f"
+
+#. "Использование:\t%s [опции] <префикс выходных файлов>\n"
+#: usage.c:75
+#, c-format
+msgid   "Usage:\t%s [options] <output files prefix>\n"
+msgstr  "Использование:\t%s [опции] <префикс выходных файлов>\n"
+
+#. "Верт. биннинг: %d"
+#: usage.c:288
+#, c-format
+msgid   "Vertical binning: %d"
+msgstr  "Верт. биннинг: %d"
+
+#. "Неверный"
+#: usage.c:206 usage.c:285
+msgid   "Wrong"
+msgstr  "Неверный"
+
+#. "Неверное время экспозиции: %s"
+#: usage.c:293
+#, c-format
+msgid   "Wrong exposure time: %s"
+msgstr  "Неверное время экспозиции: %s"
+
+#. "Неверное кол-во кадров: %s"
+#: usage.c:235
+#, c-format
+msgid   "Wrong frames number in series: %s"
+msgstr  "Неверное кол-во кадров: %s"
+
+#. "Неверная нижняя граница: %s"
+#: usage.c:54
+#, c-format
+msgid   "Wrong lower border: %s"
+msgstr  "Неверная нижняя граница: %s"
+
+#. "Неверная пауза: %s"
+#: usage.c:258
+#, c-format
+msgid   "Wrong pause length: %s"
+msgstr  "Неверная пауза: %s"
+
+#. "Неверное значение температуры: %s (должно быть от -55 до 30)"
+#: usage.c:276
+#, c-format
+msgid   "Wrong temperature: %s (must be from -55 to 30)"
+msgstr  "Неверное значение температуры: %s (должно быть от -55 до 30)"
+
+#. "Неверная верхняя граница: %s"
+#: usage.c:59
+#, c-format
+msgid   "Wrong upper border: %s"
+msgstr  "Неверная верхняя граница: %s"
+
+#. "Диапазон по X: [%d, %d]"
+#: usage.c:301
+#, c-format
+msgid   "X range: [%d, %d]"
+msgstr  "Диапазон по X: [%d, %d]"
+
+#. "Диапазон по Y: [%d, %d]"
+#: usage.c:306
+#, c-format
+msgid   "Y range: [%d, %d]"
+msgstr  "Диапазон по Y: [%d, %d]"
+
+#. дата/время
+#: takepic.c:171 takepic.c:225
+msgid   "date/time"
+msgstr  "дата/время"
+
+#. "не сохранять изображения, лишь вести запись статистки"
+#: usage.c:99
+msgid   "don't save images, only make all-stat log"
+msgstr  "не сохранять изображения, лишь вести запись статистки"
+
+#. "биннинг N пикселей по горизонтали"
+#: usage.c:90
+msgid   "horizontal binning to N pixels"
+msgstr  "биннинг N пикселей по горизонтали"
+
+#. "тип изображения"
+#: usage.c:93
+msgid   "image type"
+msgstr  "тип изображения"
+
+#. "название прибора"
+#: usage.c:96
+msgid   "instrument name"
+msgstr  "название прибора"
+
+#. "выдержать ptime секунд между экспозициями"
+#: usage.c:117
+msgid   "make pause for ptime seconds between expositions"
+msgstr  "выдержать ptime секунд между экспозициями"
+
+#. "N кадров в серии"
+#: usage.c:105
+msgid   "make series of N frames"
+msgstr  "N кадров в серии"
+
+#. "вести запись рабочих температур в файл temp_log"
+#: usage.c:102
+msgid   "make temperatures logging to file temp_log"
+msgstr  "вести запись рабочих температур в файл temp_log"
+
+#. "не открывать затвор при экспозиции (\"темновые\")"
+#: usage.c:84
+msgid   "not open shutter, when exposing (\"dark frames\")"
+msgstr  "не открывать затвор при экспозиции (\"темновые\")"
+
+#. "не сохранять изображение, а только отобразить статистику"
+#: usage.c:120
+msgid   "not save image, just show statistics"
+msgstr  "не сохранять изображение, а только отобразить статистику"
+
+#. "название объекта"
+#: usage.c:108
+msgid   "object name"
+msgstr  "название объекта"
+
+#. "имена наблюдателей"
+#: usage.c:111
+msgid   "observers' names"
+msgstr  "имена наблюдателей"
+
+#. "название программы наблюдений"
+#: usage.c:114
+msgid   "observing program name"
+msgstr  "название программы наблюдений"
+
+#. "только задать/получить температуру"
+#. "только отобразить/задать температуру"
+#: usage.c:123 usage.c:270
+msgid   "only set/get temperature"
+msgstr  "только задать/получить температуру"
+
+#. "автор программы"
+#: usage.c:81
+msgid   "program author"
+msgstr  "автор программы"
+
+#. "выбрать диапазон для считывания"
+#: usage.c:135 usage.c:138
+msgid   "select clip region"
+msgstr  "выбрать диапазон для считывания"
+
+#. "время экспозиции exptime мс"
+#: usage.c:132
+msgid   "set exposure time to exptime ms"
+msgstr  "время экспозиции exptime мс"
+
+#. "задать рабочую температуру degr градусов"
+#: usage.c:126
+msgid   "set work temperature to degr C"
+msgstr  "задать рабочую температуру degr градусов"
+
+#. "биннинг N пикселей по вертикали"
+#: usage.c:129
+msgid   "vertical binning to N pixels"
+msgstr  "биннинг N пикселей по вертикали"
