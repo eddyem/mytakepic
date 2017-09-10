@@ -1,0 +1,13 @@
+0.1 install kernel module (extern/fliusb.tgz for new kernels)
+0.2 install libfli (extern/libfli-1.104.tgz) - untar, make & copy from root files libfli.a->/usr/lib; libfli.h->/usr/include, fli.pc->/usr/share/pkgconfig/
+
+1. mkdir mk && cd mk && cmake ..
+2. make
+3. [make install] or just copy file takepic wherever you want
+
+If you wish to save not only FITS, define (cmake -Dxxx=1):
+*	-DUSERAW=1 to save raw data
+*	-DUSEPNG=1 to save png data
+
+define
+*	-DEBUG=1 for debug info

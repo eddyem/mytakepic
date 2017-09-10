@@ -1,0 +1,359 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-09-10 12:34+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=koi8-r\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:63
+msgid "show this help"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:64
+msgid "rewrite output file if exists"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:65
+msgid "verbose level (each -v increase it)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:66
+msgid "not open shutter, when exposing (\"dark frames\")"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:67
+msgid "open shutter"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:68
+msgid "close shutter"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:69
+msgid "run exposition on LOW @ pin5 I/O port"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:70
+msgid "run exposition on HIGH @ pin5 I/O port"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:71
+msgid "get value of I/O port pins"
+msgstr ""
+
+#. {"fast",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G.fast),      N_("run in 8-bit mode")},
+#. {"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:75
+msgid "program author"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:76
+msgid "object type (neon, object, flat etc)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:77
+msgid "instrument name"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:78
+msgid "object name"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:79
+msgid "observers' names"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:80
+msgid "observing program name"
+msgstr ""
+
+#. {"",  NEED_ARG,   NULL,   '',    arg_string, APTR(&G.),    N_("")},
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:83
+msgid "N flushes before exposing"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:84
+msgid "horizontal binning to N pixels"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:85
+msgid "vertical binning to N pixels"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:86
+msgid "make series of N frames"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:87
+msgid "make pause for N seconds between expositions"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:88
+msgid "set exposure time to given value (ms)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:89
+msgid "frame X0 coordinate (-1 - all with overscan)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:90
+msgid "frame Y0 coordinate (-1 - all with overscan)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:91
+msgid "frame X1 coordinate (-1 - all with overscan)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:92
+msgid "frame Y1 coordinate (-1 - all with overscan)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:93
+msgid "set I/O port pins to given value (decimal number, pin1 is LSB)"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:94
+msgid ""
+"configure I/O port pins to given value (decimal number, pin1 is LSB, 1 == "
+"output, 0 == input)"
+msgstr ""
+
+#. {"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:98
+msgid "set CCD temperature to given value (degr C)"
+msgstr ""
+
+#. Версия библиотеки '%s'
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:96
+#, c-format
+msgid "Library version '%s'"
+msgstr ""
+
+#. Камера '%s' из домена %s
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:106
+#, c-format
+msgid "Camera '%s', domain %s"
+msgstr ""
+
+#. Модель:\t\t%s
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:111
+#, c-format
+msgid "Model:\t\t%s"
+msgstr ""
+
+#. Апп. версия: %ld
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:115
+#, c-format
+msgid "HW revision: %ld"
+msgstr ""
+
+#. Прогр. версия: %ld
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:118
+#, c-format
+msgid "SW revision: %ld"
+msgstr ""
+
+#. Размер пикселя: %g x %g
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:121
+#, c-format
+msgid "Pixel size: %g x %g"
+msgstr ""
+
+#. Видимое поле: %s
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:125
+#, c-format
+msgid "Field of view: %s"
+msgstr ""
+
+#. Поле изображения: (%ld, %ld)(%ld, %ld)
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:130
+#, c-format
+msgid "Array field: (%ld, %ld)(%ld, %ld)"
+msgstr ""
+
+#. "Установка температуры ПЗС: %g градусов Цельсия\n"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:144
+#, c-format
+msgid "Set CCD temperature to %g degr.C\n"
+msgstr ""
+
+#. Температура (внутр.): %f
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:149
+#, c-format
+msgid "Inner temperature: %f\n"
+msgstr ""
+
+#. Температура (внешн.): %f
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:152
+#, c-format
+msgid "Outern temperature: %f\n"
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:172
+#, c-format
+msgid "%s CCD shutter\n"
+msgstr ""
+
+#. "Попытка сконфигурировать порт I/O как %d\n"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:183
+#, c-format
+msgid "Try to convfigure I/O port as %d\n"
+msgstr ""
+
+#. "Данные на порту I/O: %ld\n"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:190
+#, c-format
+msgid "I/O port data: 0x%02lx\n"
+msgstr ""
+
+#. "Попытка записи %d в порт I/O\n"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:194
+#, c-format
+msgid "Try to write %d to I/O port\n"
+msgstr ""
+
+#. Захват кадра %d\n
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:208
+#, c-format
+msgid "Capture frame %d\n"
+msgstr ""
+
+#. дата/время
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:216
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:279
+msgid "date/time"
+msgstr ""
+
+#. "ожидание внешнего триггера"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:223
+#, c-format
+msgid "wait for external trigger...\n"
+msgstr ""
+
+#. %.3f секунд до окончания экспозиции\n
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:227
+#, c-format
+msgid "%.3f seconds till exposition ends\n"
+msgstr ""
+
+#. Считывание изображения:
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:233
+#, c-format
+msgid "Read image: "
+msgstr ""
+
+#. Не могу сохранить файл
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:251
+msgid "Can't save file"
+msgstr ""
+
+#. Файл записан в '%s'
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:260
+#, c-format
+msgid "File saved as '%s'"
+msgstr ""
+
+#. %d секунд до окончания паузы\n
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:274
+#, c-format
+msgid "%d seconds till pause ends\n"
+msgstr ""
+
+#. Камеры не найдены!\n
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:338
+msgid "No cameras found!\n"
+msgstr ""
+
+#. Статистика по изображению:\n
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:511
+#, c-format
+msgid "Image stat:\n"
+msgstr ""
+
+#. amount of pcount and/or scount wrong
+#. / "Неправильный формат строки помощи"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:56
+msgid "Wrong helpstring!"
+msgstr ""
+
+#. / "Целое вне допустимого диапазона"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:86
+msgid "Integer out of range"
+msgstr ""
+
+#. / "Неправильный параметр: %s"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:480
+#, c-format
+msgid "Wrong parameter: %s"
+msgstr ""
+
+#. / "%s: необходим аргумент!"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:485
+#, c-format
+msgid "%s: argument needed!"
+msgstr ""
+
+#. / "Неправильный аргумент \"%s\" параметра \"%s\""
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:490
+#, c-format
+msgid "Wrong argument \"%s\" of parameter \"%s\""
+msgstr ""
+
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:173
+msgid "No filename given!"
+msgstr ""
+
+#. / "Не могу открыть %s для чтения"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:178
+#, c-format
+msgid "Can't open %s for reading"
+msgstr ""
+
+#. / "Не могу выполнить stat %s"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:183
+#, c-format
+msgid "Can't stat %s"
+msgstr ""
+
+#. / "Ошибка mmap"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:190
+msgid "Mmap error for input"
+msgstr ""
+
+#. / "Не могу закрыть mmap'нутый файл"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:195
+msgid "Can't close mmap'ed file"
+msgstr ""
+
+#. / "Не могу munmap"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:205
+msgid "Can't munmap"
+msgstr ""
+
+#. / "Не могу настроить консоль"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:231
+msgid "Can't setup console"
+msgstr ""
+
+#. Get settings
+#. / "Не могу получить настройки"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:301
+msgid "Can't get settings"
+msgstr ""
+
+#. / "Не могу установить настройки"
+#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:312
+msgid "Can't set settings"
+msgstr ""
