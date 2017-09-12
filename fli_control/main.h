@@ -24,8 +24,6 @@
 #ifndef __MAIN_H__
 #define __MAIN_H__
 
-#define _XOPEN_SOURCE 501
-
 #include "usefull_macros.h"
 #include "cmdlnopts.h"
 
@@ -50,6 +48,7 @@ typedef struct{
 }cam_t;
 
 int findcams(flidomain_t domain, cam_t **cam);
+
 #ifdef USERAW
 int writeraw(char *filename, int width, int height, void *data);
 #endif // USERAW

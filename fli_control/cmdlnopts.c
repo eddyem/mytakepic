@@ -23,6 +23,7 @@
 #include <string.h>
 #include <strings.h>
 #include <math.h>
+#include <limits.h>
 #include <libfli.h>
 #include "cmdlnopts.h"
 #include "usefull_macros.h"
@@ -52,7 +53,8 @@ glob_pars const Gdefault = {
     .X1 = -1, .Y1 = -1,
     .temperature = 1e6,
     .shtr_cmd = -1,
-    .confio = -1, .setio = -1
+    .confio = -1, .setio = -1,
+    .gotopos = INT_MAX, .addsteps = INT_MAX,
 };
 
 /*
@@ -68,7 +70,8 @@ myoption cmdlnopts[] = {
     {"close-shutter",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_CLOSE,arg_none,NULL,   N_("close shutter")},
     {"shutter-on-low",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_LOW,arg_none,NULL,   N_("run exposition on LOW @ pin5 I/O port")},
     {"shutter-on-high",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_HIGH,arg_none,NULL, N_("run exposition on HIGH @ pin5 I/O port")},
-    {"get-ioport",NO_ARGS,  NULL,   'g',    arg_int,    APTR(&G.getio),     N_("get value of I/O port pins")},
+    {"get-ioport",NO_ARGS,  NULL,   'i',    arg_int,    APTR(&G.getio),     N_("get value of I/O port pins")},
+    {"async",   NO_ARGS,    &G.async,1,     arg_none,   NULL,               N_("move stepper motor asynchronous")},
     //{"fast",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G.fast),      N_("run in 8-bit mode")},
     //{"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
 
@@ -92,7 +95,8 @@ myoption cmdlnopts[] = {
     {"Y1",      NEED_ARG,   NULL,   0,      arg_int,    APTR(&G.Y1),        N_("frame Y1 coordinate (-1 - all with overscan)")},
     {"set-ioport",NEED_ARG, NULL,   's',    arg_int,    APTR(&G.setio),     N_("set I/O port pins to given value (decimal number, pin1 is LSB)")},
     {"conf-ioport",NEED_ARG,NULL,   'c',    arg_int,    APTR(&G.confio),    N_("configure I/O port pins to given value (decimal number, pin1 is LSB, 1 == output, 0 == input)")},
-
+    {"goto",    NEED_ARG,   NULL,   'g',    arg_int,    APTR(&G.gotopos),   N_("move wheel/turret motor to absolute position")},
+    {"addsteps",NEED_ARG,   NULL,   'a',    arg_int,    APTR(&G.addsteps),  N_("move wheel/turret motor to relative position")},
     //{"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
 
     {"set-temp",NEED_ARG,   NULL,   't',    arg_double, APTR(&G.temperature),N_("set CCD temperature to given value (degr C)")},

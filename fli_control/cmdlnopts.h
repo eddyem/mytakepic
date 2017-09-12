@@ -50,6 +50,9 @@ typedef struct{
     int setio;          // set value of ioport
     int confio;         // configure ioport
     double temperature; // temperature of CCD
+    int gotopos;        // move stepper motor of focuser/wheel to absolute position
+    int addsteps;       // move stepper motor of focuser/wheel to relative position
+    int async;          // asynchronous moving
 } glob_pars;
 
 
