@@ -35,6 +35,12 @@
 
 #include "main.h"
 
+long fli_err;
+#define TRYFUNC(f, ...)             \
+do{ if((fli_err = f(__VA_ARGS__)))  \
+        WARNX(#f "() failed");      \
+}while(0)
+
 #ifdef USEPNG
 int writepng(char *filename, int width, int height, void *data);
 #endif /* USEPNG */
@@ -105,7 +111,7 @@ int main(int argc, char **argv){
     #endif */
     TRYFUNC(FLIGetLibVersion, libver, LIBVERSIZ);
     // Версия библиотеки '%s'
-    info(_("Library version '%s'"), libver);
+    if(!fli_err) info(_("Library version '%s'"), libver);
     /*
      * Find CCDs and work with each of them
      */
@@ -118,29 +124,29 @@ int main(int argc, char **argv){
         // Камера '%s' из домена %s
         info(_("Camera '%s', domain %s"), cam[i].name, cam[i].dname);
         TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
-        if(r) continue;
+        if(fli_err) continue;
         TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
         // Модель:\t\t%s
-        info(_("Model:\t\t%s"), buff);
+        if(!fli_err) info(_("Model:\t\t%s"), buff);
         camera = strdup(buff);
         TRYFUNC(FLIGetHWRevision, dev, &ltmp);
         // Апп. версия: %ld
-        info(_("HW revision: %ld"), ltmp);
+        if(!fli_err) info(_("HW revision: %ld"), ltmp);
         TRYFUNC(FLIGetFWRevision, dev, &ltmp);
         // Прогр. версия: %ld
-        info(_("SW revision: %ld"), ltmp);
+        if(!fli_err) info(_("SW revision: %ld"), ltmp);
         TRYFUNC(FLIGetPixelSize, dev, &pixX, &pixY);
         // Размер пикселя: %g x %g
-        info(_("Pixel size: %g x %g"), pixX, pixY);
+        if(!fli_err) info(_("Pixel size: %g x %g"), pixX, pixY);
         TRYFUNC(FLIGetVisibleArea, dev, &x0, &y0, &x1, &y1);
         snprintf(viewfield, 80, "(%ld, %ld)(%ld, %ld)", x0, y0, x1, y1);
         // Видимое поле: %s
-        info(_("Field of view: %s"), viewfield);
+        if(!fli_err) info(_("Field of view: %s"), viewfield);
         if(G->X1 > x1) G->X1 = x1;
         if(G->Y1 > y1) G->Y1 = y1;
         TRYFUNC(FLIGetArrayArea, dev, &x0, &y0, &x1, &y1);
         // Поле изображения: (%ld, %ld)(%ld, %ld)
-        info(_("Array field: (%ld, %ld)(%ld, %ld)"), x0, y0, x1, y1);
+        if(!fli_err) info(_("Array field: (%ld, %ld)(%ld, %ld)"), x0, y0, x1, y1);
         TRYFUNC(FLISetHBin, dev, G->hbin);
         TRYFUNC(FLISetVBin, dev, G->vbin);
         if(G->X0 == -1) G->X0 = x0; // default values
@@ -159,10 +165,10 @@ int main(int argc, char **argv){
         }
         TRYFUNC(FLIGetTemperature, dev, &t_int);
         // Температура (внутр.): %f
-        green(_("Inner temperature: %f\n"), t_int);
+        if(!fli_err) green(_("Inner temperature: %f\n"), t_int);
         TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_EXTERNAL, &t_ext);
         // Температура (внешн.): %f
-        green(_("Outern temperature: %f\n"), t_ext);
+        if(!fli_err) green(_("Outern temperature: %f\n"), t_ext);
         if(G->shtr_cmd > -1){
             flishutter_t shtr = G->shtr_cmd;
             char *str = NULL;
@@ -200,7 +206,7 @@ int main(int argc, char **argv){
             long iop;
             TRYFUNC(FLIReadIOPort, dev, &iop);
             // "Данные на порту I/O: %ld\n"
-            if(!r) green(_("I/O port data: 0x%02lx\n"), iop);
+            if(!fli_err) green(_("I/O port data: 0x%02lx\n"), iop);
         }
         if(G->setio > -1){
             // "Попытка записи %d в порт I/O\n"
@@ -230,7 +236,7 @@ int main(int argc, char **argv){
                 }
                 else WARNX("curtime() error");
                 TRYFUNC(FLIGetExposureStatus, dev, &ltmp);
-                if(r) continue;
+                if(fli_err) continue;
                 if(G->shtr_cmd > 0 && G->shtr_cmd & FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL && ltmp == G->exptime){
                     // "ожидание внешнего триггера"
                     printf(_("wait for external trigger...\n"));
@@ -247,7 +253,7 @@ int main(int argc, char **argv){
             int portion = 0;
             for (row = 0; row < img_rows; row++){
                 TRYFUNC(FLIGrabRow, dev, &img[row * row_width], row_width);
-                if(r) break;
+                if(fli_err) break;
                 int progress = (int)(((float)row / (float)img_rows) * 100.);
                 if(progress/5 > portion){
                     if((++portion)%2) printf("..");
@@ -270,7 +276,7 @@ int main(int argc, char **argv){
                     }
                     TRYFUNC(writefn, buff, row_width, img_rows, img);
                     // Файл записан в '%s'
-                    if (r == 0) info(_("File saved as '%s'"), buff);
+                    if (fli_err == 0) info(_("File saved as '%s'"), buff);
                 }
             }
                 #ifdef USERAW
@@ -308,12 +314,12 @@ int main(int argc, char **argv){
      * Find focusers and work with each of them
      */
     num = findcams(FLIDOMAIN_USB | FLIDEVICE_FOCUSER, &cam);
-    if(!num) WARNX(_("No focusers found"));
+    int nfocs = 0;
     for (i = 0; i < num; i++){
         TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
-        if(r) continue;
+        if(fli_err) continue;
         TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
-        if(!r){
+        if(!fli_err){
             if(!strcasestr(buff, "focuser")){ // not focuser
                 TRYFUNC(FLIClose, dev);
                 continue;
@@ -321,25 +327,26 @@ int main(int argc, char **argv){
             // Модель:\t\t%s
             info(_("Model:\t\t%s"), buff);
         }
+        ++nfocs;
         info(_("Focuser '%s', domain %s"), cam[i].name, cam[i].dname);
         TRYFUNC(FLIGetHWRevision, dev, &ltmp);
         // Апп. версия: %ld
-        if(!r) info(_("HW revision: %ld"), ltmp);
+        if(!fli_err) info(_("HW revision: %ld"), ltmp);
         TRYFUNC(FLIGetFWRevision, dev, &ltmp);
         // Прогр. версия: %ld
-        if(!r) info(_("SW revision: %ld"), ltmp);
+        if(!fli_err) info(_("SW revision: %ld"), ltmp);
         TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_INTERNAL, &t_ext);
         // Температура (внешн.): %f
-        if(!r) green(_("Focuser temperature: %f\n"), t_ext);
+        if(!fli_err) green(_("Focuser temperature: %f\n"), t_ext);
         long curpos = -1, maxpos = -1;
         TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-        if(!r){
+        if(!fli_err){
             // Позиция фокусера: %ld
             info(_("Focuser position %ld"), ltmp);
             curpos = ltmp;
         }
         TRYFUNC(FLIGetFocuserExtent, dev, &ltmp);
-        if(!r){
+        if(!fli_err){
             // Максимальная позиция фокусера: %ld
             info(_("Focuser extent: %ld"), ltmp);
             maxpos = ltmp;
@@ -385,49 +392,83 @@ int main(int argc, char **argv){
             }
             TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
             // Достигнута позиция %ls
-            if(!r) info(_("Reached position %ld"), ltmp);
+            if(!fli_err) info(_("Reached position %ld"), ltmp);
         }while(0);
         ;
         TRYFUNC(FLIClose, dev);
     }
+    if(!nfocs) WARNX(_("No focusers found"));
     for (i = 0; i < num; i++)
         FREE(cam[i].name);
     FREE(cam);
     /*
      * Find wheels and work with each of them
-     *
+     */
     num = findcams(FLIDOMAIN_USB | FLIDEVICE_FILTERWHEEL, &cam);
-    if(!num) WARNX(_("No wheels found"));
+    int nwheels = 0;
     for (i = 0; i < num; i++){
         info(_("Wheel '%s', domain %s"), cam[i].name, cam[i].dname);
         TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
-        if(r) continue;
+        if(fli_err) continue;
         TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
         // Модель:\t\t%s
-        info(_("Model:\t\t%s"), buff);
+        if(!fli_err) info(_("Model:\t\t%s"), buff);
         TRYFUNC(FLIGetHWRevision, dev, &ltmp);
         // Апп. версия: %ld
-        info(_("HW revision: %ld"), ltmp);
+        if(!fli_err) info(_("HW revision: %ld"), ltmp);
         TRYFUNC(FLIGetFWRevision, dev, &ltmp);
         // Прогр. версия: %ld
-        info(_("SW revision: %ld"), ltmp);
-        TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_INTERNAL, &t_ext);
-        // Температура (внешн.): %f
-        green(_("Wheel temperature: %f\n"), t_ext);
-        // Позиция турели: %ld
-        TRYFUNC(FLIGetFilterPos, dev, &ltmp);
-        info(_("Filter position"), ltmp);
+        if(!fli_err) info(_("SW revision: %ld"), ltmp);
+        TRYFUNC(FLIGetFilterCount, dev, &ltmp);
+        if(!fli_err) info(_("Amount of positions: %ld"), ltmp);
+        else goto closewheeldev;
+        if(G->setwheel > -1 && G->setwheel >= ltmp){
+            G->setwheel = -1;
+            WARNX(_("Wheel position should be from 0 to %ld"), ltmp - 1);
+        }
+        /*
+        TRYFUNC(FLIHomeDevice, dev);
+        int ii;
+        for(ii = 0; ii < 100; ++ii){
+            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+            if(!fli_err) printf("%ld\t", ltmp);
+            TRYFUNC( FLIGetStepsRemaining, dev, &ltmp);
+            if(!fli_err) printf("%ld\t", ltmp);
+            TRYFUNC(FLIGetFilterPos, dev, &ltmp);
+            if(!fli_err) printf("%ld\n", ltmp);
+            usleep(50000);
+        }
+        long curpos = -1;
+        TRYFUNC(FLIGetFilterPos, dev, &curpos);
+        if(!fli_err){
+            // Позиция турели: %ld
+            info(_("Wheel position: %ld"), curpos);
+            if(G->getwheel) printf("%ld\n", curpos);
+        }else goto closewheeldev;
+        *
+        TRYFUNC(FLIGetActiveWheel, dev, &ltmp);
+        if(!fli_err) info(_("Wheel number: %ld"), ltmp);
+        TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+        if(!fli_err) info(_("stepper position: %ld"), ltmp);
+        */
+        ++nwheels;
+        if(G->setwheel > -1){
+            ltmp = G->setwheel;
+            TRYFUNC(FLISetFilterPos, dev, ltmp);
+            if(!fli_err) info(_("Arrive to position"));
+        }
         ;
+    closewheeldev:
         TRYFUNC(FLIClose, dev);
     }
+    if(!nwheels) WARNX(_("No wheels found"));
     for (i = 0; i < num; i++)
         FREE(cam[i].name);
-    FREE(cam);*/
-    exit(0);
+    FREE(cam);
+    return 0;
 }
 
 int findcams(flidomain_t domain, cam_t **cam){
-    long r;
     char **tmplist;
     int numcams = 0;
     TRYFUNC(FLIList, domain, &tmplist);

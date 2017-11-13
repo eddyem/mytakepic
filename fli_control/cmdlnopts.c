@@ -55,6 +55,7 @@ glob_pars const Gdefault = {
     .shtr_cmd = -1,
     .confio = -1, .setio = -1,
     .gotopos = INT_MAX, .addsteps = INT_MAX,
+    .setwheel = -1,
 };
 
 /*
@@ -95,8 +96,10 @@ myoption cmdlnopts[] = {
     {"Y1",      NEED_ARG,   NULL,   0,      arg_int,    APTR(&G.Y1),        N_("frame Y1 coordinate (-1 - all with overscan)")},
     {"set-ioport",NEED_ARG, NULL,   's',    arg_int,    APTR(&G.setio),     N_("set I/O port pins to given value (decimal number, pin1 is LSB)")},
     {"conf-ioport",NEED_ARG,NULL,   'c',    arg_int,    APTR(&G.confio),    N_("configure I/O port pins to given value (decimal number, pin1 is LSB, 1 == output, 0 == input)")},
-    {"goto",    NEED_ARG,   NULL,   'g',    arg_int,    APTR(&G.gotopos),   N_("move wheel/turret motor to absolute position")},
-    {"addsteps",NEED_ARG,   NULL,   'a',    arg_int,    APTR(&G.addsteps),  N_("move wheel/turret motor to relative position")},
+    {"goto",    NEED_ARG,   NULL,   'g',    arg_int,    APTR(&G.gotopos),   N_("move focuser to absolute position")},
+    {"addsteps",NEED_ARG,   NULL,   'a',    arg_int,    APTR(&G.addsteps),  N_("move focuser to relative position")},
+    {"wheel-get",NO_ARGS,   NULL,   0,      arg_none,   APTR(&G.getwheel),  N_("get current wheel position")},
+    {"wheel-set",NEED_ARG,  NULL,   'w',    arg_int,    APTR(&G.setwheel),  N_("set wheel position")},
     //{"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
 
     {"set-temp",NEED_ARG,   NULL,   't',    arg_double, APTR(&G.temperature),N_("set CCD temperature to given value (degr C)")},

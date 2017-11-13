@@ -33,12 +33,6 @@
 
 #include <libfli.h>
 
-long r;
-#define TRYFUNC(f, ...)             \
-do{ if((r = f(__VA_ARGS__)))        \
-        WARNX(#f "() failed");  \
-}while(0)
-
 #define LIBVERSIZ 1024
 
 typedef struct{
