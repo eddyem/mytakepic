@@ -52,7 +52,7 @@ typedef struct{
     double temperature; // temperature of CCD
     int gotopos;        // move stepper motor of focuser to absolute position
     int addsteps;       // move stepper motor of focuser to relative position
-    int getwheel;       // get position of wheel
+//    int getwheel;       // get position of wheel
     int setwheel;       // set wheel position
     int async;          // asynchronous moving
 } glob_pars;

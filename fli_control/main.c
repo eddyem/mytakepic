@@ -35,6 +35,19 @@
 
 #include "main.h"
 
+#ifndef FLIUSB_VENDORID
+#define FLIUSB_VENDORID 0xf18
+#endif
+#ifndef FLIUSB_PROLINE_ID
+#define FLIUSB_PROLINE_ID 0x0a
+#endif
+#ifndef FLIUSB_FILTER_ID
+#define FLIUSB_FILTER_ID 0x07
+#endif
+#ifndef FLIUSB_FOCUSER_ID
+#define FLIUSB_FOCUSER_ID 0x06
+#endif
+
 long fli_err;
 #define TRYFUNC(f, ...)             \
 do{ if((fli_err = f(__VA_ARGS__)))  \
@@ -88,11 +101,11 @@ extern const char *__progname;
 void info(const char *fmt, ...){
     va_list ar;
     if(!verbose) return;
-    printf(GREEN "%s: ", __progname);
+    printf("%s: ", __progname);
     va_start(ar, fmt);
     vprintf(fmt, ar);
     va_end(ar);
-    printf(OLDCOLOR "\n");
+    printf("\n");
 }
 
 int main(int argc, char **argv){
@@ -113,6 +126,162 @@ int main(int argc, char **argv){
     // Версия библиотеки '%s'
     if(!fli_err) info(_("Library version '%s'"), libver);
     /*
+     * Find focusers and work with each of them
+     */
+    num = findcams(FLIDOMAIN_USB | FLIDEVICE_FOCUSER, &cam);
+    int nfocs = 0;
+    for (i = 0; i < num; i++){
+        TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
+        if(fli_err) continue;
+        TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
+        if(!fli_err){
+            if(!strcasestr(buff, "focuser")){ // not focuser
+                TRYFUNC(FLIClose, dev);
+                continue;
+            }
+            // Модель:\t\t%s
+            info(_("Model:\t\t%s"), buff);
+        }
+        ++nfocs;
+        info(_("Focuser '%s', domain %s"), cam[i].name, cam[i].dname);
+        TRYFUNC(FLIGetHWRevision, dev, &ltmp);
+        // Апп. версия: %ld
+        if(!fli_err) info(_("HW revision: %ld"), ltmp);
+        TRYFUNC(FLIGetFWRevision, dev, &ltmp);
+        // Прогр. версия: %ld
+        if(!fli_err) info(_("SW revision: %ld"), ltmp);
+        TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_INTERNAL, &t_ext);
+        if(!fli_err) green("FOCTEMP=%.1f\n", t_ext);
+        long curpos = -1, maxpos = -1;
+        TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+        if(!fli_err){
+            curpos = ltmp;
+        }
+        TRYFUNC(FLIGetFocuserExtent, dev, &ltmp);
+        if(!fli_err){
+            green("FOCMAXPOS=%ld\n", ltmp);
+            maxpos = ltmp;
+        }
+        do{
+            if(G->gotopos != INT_MAX && G->addsteps != INT_MAX){
+                // Нельзя одновременно указывать относительную и абсолютную позицию
+                WARNX(_("You can't use both relative and absolute position"));
+                break;
+            }
+            if(curpos < 0 || maxpos < 0){
+                // Ошибка определения позиции
+                WARNX(_("Error in position detection"));
+                break;
+            }
+            long pos = -1, steps = 0;
+            if(G->gotopos != INT_MAX){ // absolute pointing
+                pos = G->gotopos;
+                steps = pos - curpos;
+            }else if(G->addsteps != INT_MAX){ // relative pointing
+                steps = G->addsteps;
+                pos = curpos + steps;
+            }else break;
+            if(!steps){
+                info(_("Already at position"));
+                break;
+            }
+            if(pos > maxpos || pos < 0){
+                // Позиция не должна выходить за пределы 0...%ld
+                WARNX(_("Position should be in 0...%ld"), maxpos);
+                break;
+            }
+            if(pos == 0){
+                // Перемещение в нулевую позицию
+                info(_("Moving to home position"));
+                if(G->async) TRYFUNC(FLIHomeDevice, dev);
+                else TRYFUNC(FLIHomeFocuser, dev);
+            }else{
+                // Перемещение на %ld шагов
+                info(_("Moving for %ld steps"), steps);
+                if(G->async) TRYFUNC(FLIStepMotorAsync, dev, steps);
+                else TRYFUNC(FLIStepMotor, dev, steps);
+            }
+            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+            if(!fli_err){
+                green("FOCPOS=%ld\n", ltmp);
+                curpos = ltmp;
+            }
+        }while(0);
+        ;
+        TRYFUNC(FLIClose, dev);
+    }
+    if(!nfocs) WARNX(_("No focusers found"));
+    for (i = 0; i < num; i++)
+        FREE(cam[i].name);
+    FREE(cam);
+    /*
+     * Find wheels and work with each of them
+     */
+    num = findcams(FLIDOMAIN_USB | FLIDEVICE_FILTERWHEEL, &cam);
+    int nwheels = 0;
+    for (i = 0; i < num; i++){
+        TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
+        if(fli_err) continue;
+        TRYFUNC(FLIGetFilterCount, dev, &ltmp);
+        if(fli_err || ltmp < 2){// not a wheel
+            TRYFUNC(FLIClose, dev);
+            continue;
+        }
+        info(_("Wheel '%s', domain %s"), cam[i].name, cam[i].dname);
+        green("WHEELTOTALPOS=%ld\n", ltmp);
+        TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
+        // Модель:\t\t%s
+        if(!fli_err) info(_("Model:\t\t%s"), buff);
+        TRYFUNC(FLIGetHWRevision, dev, &ltmp);
+        // Апп. версия: %ld
+        if(!fli_err) info(_("HW revision: %ld"), ltmp);
+        TRYFUNC(FLIGetFWRevision, dev, &ltmp);
+        // Прогр. версия: %ld
+        if(!fli_err) info(_("SW revision: %ld"), ltmp);
+        else goto closewheeldev;
+        if(G->setwheel > -1 && G->setwheel >= ltmp){
+            G->setwheel = -1;
+            WARNX(_("Wheel position should be from 0 to %ld"), ltmp - 1);
+        }
+        /**
+        TRYFUNC(FLIHomeDevice, dev);
+        int ii;
+        for(ii = 0; ii < 100; ++ii){
+            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+            if(!fli_err) printf("%ld\t", ltmp);
+            TRYFUNC( FLIGetStepsRemaining, dev, &ltmp);
+            if(!fli_err) printf("%ld\t", ltmp);
+            TRYFUNC(FLIGetFilterPos, dev, &ltmp);
+            if(!fli_err) printf("%ld\n", ltmp);
+            usleep(50000);
+        }
+        /*
+        TRYFUNC(FLIGetActiveWheel, dev, &ltmp);
+        if(!fli_err) info(_("Wheel number: %ld"), ltmp);
+        TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+        if(!fli_err) info(_("stepper position: %ld"), ltmp);
+        */
+        ++nwheels;
+        if(G->setwheel > -1){
+            ltmp = G->setwheel;
+            TRYFUNC(FLISetFilterPos, dev, ltmp);
+            if(!fli_err) info(_("Arrive to position"));
+            long curpos = -1;
+        // this function returns -1 every connection!!!
+            TRYFUNC(FLIGetFilterPos, dev, &curpos);
+            if(!fli_err){
+                green("WHEELPOS=%ld\n", curpos);
+            }else goto closewheeldev;
+        }
+        ;
+    closewheeldev:
+        TRYFUNC(FLIClose, dev);
+    }
+    if(!nwheels) WARNX(_("No wheels found"));
+    for (i = 0; i < num; i++)
+        FREE(cam[i].name);
+    FREE(cam);
+        /*
      * Find CCDs and work with each of them
      */
     num = findcams(FLIDOMAIN_USB | FLIDEVICE_CAMERA, &cam);
@@ -164,11 +333,9 @@ int main(int argc, char **argv){
             TRYFUNC(FLISetTemperature, dev, G->temperature);
         }
         TRYFUNC(FLIGetTemperature, dev, &t_int);
-        // Температура (внутр.): %f
-        if(!fli_err) green(_("Inner temperature: %f\n"), t_int);
+        if(!fli_err) green("CCDTEMP=%.1f\n", t_int);
         TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_EXTERNAL, &t_ext);
-        // Температура (внешн.): %f
-        if(!fli_err) green(_("Outern temperature: %f\n"), t_ext);
+        if(!fli_err) green("EXTTEMP=%.1f\n", t_ext);
         if(G->shtr_cmd > -1){
             flishutter_t shtr = G->shtr_cmd;
             char *str = NULL;
@@ -205,8 +372,7 @@ int main(int argc, char **argv){
         if(G->getio){
             long iop;
             TRYFUNC(FLIReadIOPort, dev, &iop);
-            // "Данные на порту I/O: %ld\n"
-            if(!fli_err) green(_("I/O port data: 0x%02lx\n"), iop);
+            if(!fli_err) green("CCDIOPORT=0x%02lx\n", iop);
         }
         if(G->setio > -1){
             // "Попытка записи %d в порт I/O\n"
@@ -310,161 +476,6 @@ int main(int argc, char **argv){
     for (i = 0; i < num; i++)
         FREE(cam[i].name);
     FREE(cam);
-    /*
-     * Find focusers and work with each of them
-     */
-    num = findcams(FLIDOMAIN_USB | FLIDEVICE_FOCUSER, &cam);
-    int nfocs = 0;
-    for (i = 0; i < num; i++){
-        TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
-        if(fli_err) continue;
-        TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
-        if(!fli_err){
-            if(!strcasestr(buff, "focuser")){ // not focuser
-                TRYFUNC(FLIClose, dev);
-                continue;
-            }
-            // Модель:\t\t%s
-            info(_("Model:\t\t%s"), buff);
-        }
-        ++nfocs;
-        info(_("Focuser '%s', domain %s"), cam[i].name, cam[i].dname);
-        TRYFUNC(FLIGetHWRevision, dev, &ltmp);
-        // Апп. версия: %ld
-        if(!fli_err) info(_("HW revision: %ld"), ltmp);
-        TRYFUNC(FLIGetFWRevision, dev, &ltmp);
-        // Прогр. версия: %ld
-        if(!fli_err) info(_("SW revision: %ld"), ltmp);
-        TRYFUNC(FLIReadTemperature, dev, FLI_TEMPERATURE_INTERNAL, &t_ext);
-        // Температура (внешн.): %f
-        if(!fli_err) green(_("Focuser temperature: %f\n"), t_ext);
-        long curpos = -1, maxpos = -1;
-        TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-        if(!fli_err){
-            // Позиция фокусера: %ld
-            info(_("Focuser position %ld"), ltmp);
-            curpos = ltmp;
-        }
-        TRYFUNC(FLIGetFocuserExtent, dev, &ltmp);
-        if(!fli_err){
-            // Максимальная позиция фокусера: %ld
-            info(_("Focuser extent: %ld"), ltmp);
-            maxpos = ltmp;
-        }
-        do{
-            if(G->gotopos != INT_MAX && G->addsteps != INT_MAX){
-                // Нельзя одновременно указывать относительную и абсолютную позицию
-                WARNX(_("You can't use both relative and absolute position"));
-                break;
-            }
-            if(curpos < 0 || maxpos < 0){
-                // Ошибка определения позиции
-                WARNX(_("Error in position detection"));
-                break;
-            }
-            long pos = -1, steps = 0;
-            if(G->gotopos != INT_MAX){ // absolute pointing
-                pos = G->gotopos;
-                steps = pos - curpos;
-            }else if(G->addsteps != INT_MAX){ // relative pointing
-                steps = G->addsteps;
-                pos = curpos + steps;
-            }else break;
-            if(!steps){
-                info(_("Already at position"));
-                break;
-            }
-            if(pos > maxpos || pos < 0){
-                // Позиция не должна выходить за пределы 0...%ld
-                WARNX(_("Position should be in 0...%ld"), maxpos);
-                break;
-            }
-            if(pos == 0){
-                // Перемещение в нулевую позицию
-                info(_("Moving to home position"));
-                if(G->async) TRYFUNC(FLIHomeDevice, dev);
-                else TRYFUNC(FLIHomeFocuser, dev);
-            }else{
-                // Перемещение на %ld шагов
-                info(_("Moving for %ld steps"), steps);
-                if(G->async) TRYFUNC(FLIStepMotorAsync, dev, steps);
-                else TRYFUNC(FLIStepMotor, dev, steps);
-            }
-            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-            // Достигнута позиция %ls
-            if(!fli_err) info(_("Reached position %ld"), ltmp);
-        }while(0);
-        ;
-        TRYFUNC(FLIClose, dev);
-    }
-    if(!nfocs) WARNX(_("No focusers found"));
-    for (i = 0; i < num; i++)
-        FREE(cam[i].name);
-    FREE(cam);
-    /*
-     * Find wheels and work with each of them
-     */
-    num = findcams(FLIDOMAIN_USB | FLIDEVICE_FILTERWHEEL, &cam);
-    int nwheels = 0;
-    for (i = 0; i < num; i++){
-        info(_("Wheel '%s', domain %s"), cam[i].name, cam[i].dname);
-        TRYFUNC(FLIOpen, &dev, cam[i].name, cam[i].domain);
-        if(fli_err) continue;
-        TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
-        // Модель:\t\t%s
-        if(!fli_err) info(_("Model:\t\t%s"), buff);
-        TRYFUNC(FLIGetHWRevision, dev, &ltmp);
-        // Апп. версия: %ld
-        if(!fli_err) info(_("HW revision: %ld"), ltmp);
-        TRYFUNC(FLIGetFWRevision, dev, &ltmp);
-        // Прогр. версия: %ld
-        if(!fli_err) info(_("SW revision: %ld"), ltmp);
-        TRYFUNC(FLIGetFilterCount, dev, &ltmp);
-        if(!fli_err) info(_("Amount of positions: %ld"), ltmp);
-        else goto closewheeldev;
-        if(G->setwheel > -1 && G->setwheel >= ltmp){
-            G->setwheel = -1;
-            WARNX(_("Wheel position should be from 0 to %ld"), ltmp - 1);
-        }
-        /*
-        TRYFUNC(FLIHomeDevice, dev);
-        int ii;
-        for(ii = 0; ii < 100; ++ii){
-            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-            if(!fli_err) printf("%ld\t", ltmp);
-            TRYFUNC( FLIGetStepsRemaining, dev, &ltmp);
-            if(!fli_err) printf("%ld\t", ltmp);
-            TRYFUNC(FLIGetFilterPos, dev, &ltmp);
-            if(!fli_err) printf("%ld\n", ltmp);
-            usleep(50000);
-        }
-        long curpos = -1;
-        TRYFUNC(FLIGetFilterPos, dev, &curpos);
-        if(!fli_err){
-            // Позиция турели: %ld
-            info(_("Wheel position: %ld"), curpos);
-            if(G->getwheel) printf("%ld\n", curpos);
-        }else goto closewheeldev;
-        *
-        TRYFUNC(FLIGetActiveWheel, dev, &ltmp);
-        if(!fli_err) info(_("Wheel number: %ld"), ltmp);
-        TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-        if(!fli_err) info(_("stepper position: %ld"), ltmp);
-        */
-        ++nwheels;
-        if(G->setwheel > -1){
-            ltmp = G->setwheel;
-            TRYFUNC(FLISetFilterPos, dev, ltmp);
-            if(!fli_err) info(_("Arrive to position"));
-        }
-        ;
-    closewheeldev:
-        TRYFUNC(FLIClose, dev);
-    }
-    if(!nwheels) WARNX(_("No wheels found"));
-    for (i = 0; i < num; i++)
-        FREE(cam[i].name);
-    FREE(cam);
     return 0;
 }
 
@@ -486,12 +497,14 @@ int findcams(flidomain_t domain, cam_t **cam){
                     break;
                 }
             tmpcam->domain = domain;
+            tmpcam->name = strdup(tmplist[i]);
             switch (domain & 0xff){
             case FLIDOMAIN_PARALLEL_PORT:
                 tmpcam->dname = "parallel port";
                 break;
             case FLIDOMAIN_USB:
                 tmpcam->dname = "USB";
+                ;
                 break;
             case FLIDOMAIN_SERIAL:
                 tmpcam->dname = "serial";
@@ -503,7 +516,6 @@ int findcams(flidomain_t domain, cam_t **cam){
                 tmpcam->dname = "Unknown domain";
                 break;
             }
-            tmpcam->name = strdup(tmplist[i]);
             DBG("found: %s @ %s", tmpcam->name, tmpcam->dname);
         }
         numcams += cams;
