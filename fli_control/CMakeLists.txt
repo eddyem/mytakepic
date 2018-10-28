@@ -1,14 +1,19 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 set(PROJ fli_control)
 set(MINOR_VERSION "0")
 set(MID_VERSION "1")
 set(MAJOR_VERSION "0")
 set(VERSION "${MAJOR_VERSION}.${MID_VERSION}.${MINOR_VERSION}")
 
-message("VER: ${VERSION}")
+project(${PROJ} VERSION ${PROJ_VERSION} LANGUAGES C CXX)
 
 # default flags
-set(CFLAGS -O2 -std=gnu99)
+set(CMAKE_C_FLAGS_RELEASE "")
+set(CMAKE_C_FLAGS_DEBUG "")
+set(CMAKE_CXX_FLAGS_RELEASE "")
+set(CMAKE_CXX_FLAGS_DEBUG "")
+set(CMAKE_C_FLAGS "-O2 -std=gnu99")
+set(CMAKE_CXX_FLAGS "-O2")
 
 set(CMAKE_COLOR_MAKEFILE ON)
 
@@ -18,23 +23,28 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCES)
 
 # cmake -DEBUG=1 -> debugging
 if(DEFINED EBUG)
-    set(CFLAGS ${CFLAGS} -Wextra -Wall -Werror -W)
-    add_definitions(-DEBUG)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wextra -Wall -Werror -W")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wall -Werror -W")
+    set(CMAKE_BUILD_TYPE DEBUG)
+    add_definitions(-DEBUG) # -DATIK_DEBUG=1)
 endif()
 
 find_package(PkgConfig REQUIRED)
-set(MODULES cfitsio>=3.0 fli>=1.71)
+# find CFITSIO
+SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
+FIND_PACKAGE(CFITSIO REQUIRED)
+
+set(MODULES fli>=1.71)
 # additional modules on condition
-if(DEFINED USEPNG)
+if(DEFINED USE_PNG AND USE_PNG STREQUAL "yes")
     set(MODULES ${MODULES} libpng>=1.2)
     add_definitions(-DUSEPNG)
 endif()
 pkg_check_modules(${PROJ} REQUIRED ${MODULES})
-if(DEFINED USERAW)
+if(DEFINED USE_RAW AND USE_RAW STREQUAL "yes")
     add_definitions(-DUSERAW)
 endif()
 
-project(${PROJ})
 # change wrong behaviour with install prefix
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND CMAKE_INSTALL_PREFIX MATCHES "/usr/local")
     message("Change default install path to /usr")
@@ -60,8 +70,8 @@ set(RU_FILE ${LCPATH}/ru.po)
 
 # exe file
 add_executable(${PROJ} ${SOURCES} ${PO_FILE} ${MO_FILE})
-target_link_libraries(${PROJ} ${${PROJ}_LIBRARIES})
-include_directories(${${PROJ}_INCLUDE_DIRS})
+target_link_libraries(${PROJ} ${${PROJ}_LIBRARIES} ${CFITSIO_LIBRARIES})
+include_directories(${${PROJ}_INCLUDE_DIRS} ${CFITSIO_INCLUDE_DIR})
 link_directories(${${PROJ}_LIBRARY_DIRS} )
 add_definitions(${CFLAGS} -DLOCALEDIR=\"${LOCALEDIR}\"
         -DPACKAGE_VERSION=\"${VERSION}\" -DGETTEXT_PACKAGE=\"${PROJ}\"

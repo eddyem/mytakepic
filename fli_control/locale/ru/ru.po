@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: PACKAGE VERSION\n"
         "Report-Msgid-Bugs-To: \n"
-        "POT-Creation-Date: 2017-09-10 12:34+0300\n"
+        "POT-Creation-Date: 2018-10-28 18:36+0300\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,341 +17,404 @@ msgstr  "Project-Id-Version: PACKAGE VERSION\n"
         "Content-Transfer-Encoding: 8bit\n"
 
 #. %.3f секунд до окончания экспозиции\n
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:227
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:412
 #, c-format
 msgid   "%.3f seconds till exposition ends\n"
-msgstr  ""
+msgstr  "%.3f секунд до окончания экспозиции\n"
 
 #. %d секунд до окончания паузы\n
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:274
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:459
 #, c-format
 msgid   "%d seconds till pause ends\n"
-msgstr  ""
+msgstr  "%d секунд до окончания паузы\n"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:172
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:358
 #, c-format
 msgid   "%s CCD shutter\n"
-msgstr  ""
+msgstr  "%s затвор ПЗС\n"
 
 #. / "%s: необходим аргумент!"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:485
+#: /home/eddy/C-files/mytakepic/fli_control/parseargs.c:485
 #, c-format
 msgid   "%s: argument needed!"
-msgstr  ""
+msgstr  "%s: необходим аргумент!"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:185
+msgid   "Already at position"
+msgstr  "Уже на позиции"
 
 #. Поле изображения: (%ld, %ld)(%ld, %ld)
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:130
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:318
 #, c-format
 msgid   "Array field: (%ld, %ld)(%ld, %ld)"
-msgstr  ""
+msgstr  "Поле изображения: (%ld, %ld)(%ld, %ld)"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:268
+msgid   "Arrive to position"
+msgstr  "Прибыл на позицию"
 
 #. Камера '%s' из домена %s
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:106
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:294
 #, c-format
 msgid   "Camera '%s', domain %s"
-msgstr  ""
+msgstr  "Камера '%s' из домена %s"
 
 #. / "Не могу закрыть mmap'нутый файл"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:195
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:195
 msgid   "Can't close mmap'ed file"
-msgstr  ""
+msgstr  "Не могу закрыть mmap'нутый файл"
 
 #. Get settings
 #. / "Не могу получить настройки"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:301
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:301
 msgid   "Can't get settings"
-msgstr  ""
+msgstr  "Не могу получить настройки"
 
 #. / "Не могу munmap"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:205
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:205
 msgid   "Can't munmap"
-msgstr  ""
+msgstr  "Не могу munmap"
 
 #. / "Не могу открыть %s для чтения"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:178
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:178
 #, c-format
 msgid   "Can't open %s for reading"
-msgstr  ""
+msgstr  "Не могу открыть %s для чтения"
 
 #. Не могу сохранить файл
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:251
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:436
 msgid   "Can't save file"
-msgstr  ""
+msgstr  "Не могу сохранить файл"
 
 #. / "Не могу установить настройки"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:312
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:312
 msgid   "Can't set settings"
-msgstr  ""
+msgstr  "Не могу установить настройки"
 
 #. / "Не могу настроить консоль"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:231
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:231
 msgid   "Can't setup console"
-msgstr  ""
+msgstr  "Не могу настроить консоль"
 
 #. / "Не могу выполнить stat %s"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:183
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:183
 #, c-format
 msgid   "Can't stat %s"
-msgstr  ""
+msgstr  "Не могу выполнить stat %s"
 
 #. Захват кадра %d\n
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:208
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:393
 #, c-format
 msgid   "Capture frame %d\n"
-msgstr  ""
+msgstr  "Захват кадра %d\n"
+
+#. Ошибка определения позиции
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:173
+msgid   "Error in position detection"
+msgstr  "Ошибка определения позиции"
 
 #. Видимое поле: %s
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:125
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:313
 #, c-format
 msgid   "Field of view: %s"
-msgstr  ""
+msgstr  "Видимое поле: %s"
 
 #. Файл записан в '%s'
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:260
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:445
 #, c-format
 msgid   "File saved as '%s'"
-msgstr  ""
+msgstr  "Файл записан в '%s'"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:146
+#, c-format
+msgid   "Focuser '%s', domain %s"
+msgstr  "Фокусер '%s', домен %s"
 
 #. Апп. версия: %ld
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:115
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:149
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:237
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:303
 #, c-format
 msgid   "HW revision: %ld"
-msgstr  ""
-
-#. "Данные на порту I/O: %ld\n"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:190
-#, c-format
-msgid   "I/O port data: 0x%02lx\n"
-msgstr  ""
+msgstr  "Апп. версия: %ld"
 
 #. Статистика по изображению:\n
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:511
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:696
 #, c-format
 msgid   "Image stat:\n"
-msgstr  ""
-
-#. Температура (внутр.): %f
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:149
-#, c-format
-msgid   "Inner temperature: %f\n"
-msgstr  ""
+msgstr  "Статистика по изображению:\n"
 
 #. / "Целое вне допустимого диапазона"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:86
+#: /home/eddy/C-files/mytakepic/fli_control/parseargs.c:86
 msgid   "Integer out of range"
-msgstr  ""
+msgstr  "Целое вне допустимого диапазона"
 
 #. Версия библиотеки '%s'
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:96
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:127
 #, c-format
 msgid   "Library version '%s'"
-msgstr  ""
+msgstr  "Версия библиотеки '%s'"
 
 #. / "Ошибка mmap"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:190
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:190
 msgid   "Mmap error for input"
-msgstr  ""
+msgstr  "Ошибка mmap"
 
 #. Модель:\t\t%s
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:111
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:143
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:234
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:299
 #, c-format
 msgid   "Model:\t\t%s"
-msgstr  ""
+msgstr  "Модель:\t\t%s"
+
+#. Перемещение на %ld шагов
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:200
+#, c-format
+msgid   "Moving for %ld steps"
+msgstr  "Перемещение на %ld шагов"
+
+#. Перемещение в нулевую позицию
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:195
+msgid   "Moving to home position"
+msgstr  "Перемещение в нулевую позицию"
 
 #. {"",  NEED_ARG,   NULL,   '',    arg_string, APTR(&G.),    N_("")},
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:83
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:87
 msgid   "N flushes before exposing"
-msgstr  ""
+msgstr  "N сбросов до экспозиции"
 
-#. Камеры не найдены!\n
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:338
-msgid   "No cameras found!\n"
-msgstr  ""
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:288
+msgid   "No CCD found"
+msgstr  "ПЗС не обнаружено"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/usefull_macros.c:173
+#: /home/eddy/C-files/mytakepic/fli_control/usefull_macros.c:173
 msgid   "No filename given!"
-msgstr  ""
+msgstr  "Не задано имя файла!"
 
-#. Температура (внешн.): %f
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:152
-#, c-format
-msgid   "Outern temperature: %f\n"
-msgstr  ""
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:213
+msgid   "No focusers found"
+msgstr  "Не найден фокусер"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:280
+msgid   "No wheels found"
+msgstr  "Не найдены турели"
 
 #. Размер пикселя: %g x %g
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:121
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:309
 #, c-format
 msgid   "Pixel size: %g x %g"
-msgstr  ""
+msgstr  "Размер пикселя: %g x %g"
+
+#. Позиция не должна выходить за пределы 0...%ld
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:190
+#, c-format
+msgid   "Position should be in 0...%ld"
+msgstr  "Позиция не должна выходить за пределы 0...%ld"
 
 #. Считывание изображения:
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:233
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:418
 #, c-format
 msgid   "Read image: "
-msgstr  ""
+msgstr  "Считывание изображения:"
 
 #. Прогр. версия: %ld
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:118
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:152
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:240
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:306
 #, c-format
 msgid   "SW revision: %ld"
-msgstr  ""
+msgstr  "Прогр. версия: %ld"
 
 #. "Установка температуры ПЗС: %g градусов Цельсия\n"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:144
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:332
 #, c-format
 msgid   "Set CCD temperature to %g degr.C\n"
-msgstr  ""
+msgstr  "Установка температуры ПЗС: %g градусов Цельсия\n"
 
 #. "Попытка сконфигурировать порт I/O как %d\n"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:183
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:369
 #, c-format
 msgid   "Try to convfigure I/O port as %d\n"
-msgstr  ""
+msgstr  "Попытка сконфигурировать порт I/O как %d\n"
 
 #. "Попытка записи %d в порт I/O\n"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:194
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:379
 #, c-format
 msgid   "Try to write %d to I/O port\n"
-msgstr  ""
+msgstr  "Попытка записи %d в порт I/O\n"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:230
+#, c-format
+msgid   "Wheel '%s', domain %s"
+msgstr  "Колесо '%s', домен %s"
+
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:244
+#, c-format
+msgid   "Wheel position should be from 0 to %ld"
+msgstr  "Номер позиции колеса: от 0 до %ld"
 
 #. / "Неправильный аргумент \"%s\" параметра \"%s\""
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:490
+#: /home/eddy/C-files/mytakepic/fli_control/parseargs.c:490
 #, c-format
 msgid   "Wrong argument \"%s\" of parameter \"%s\""
-msgstr  ""
+msgstr  "Неправильный аргумент \"%s\" параметра \"%s\""
 
 #. amount of pcount and/or scount wrong
 #. / "Неправильный формат строки помощи"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:56
+#: /home/eddy/C-files/mytakepic/fli_control/parseargs.c:56
 msgid   "Wrong helpstring!"
-msgstr  ""
+msgstr  "Неправильный формат строки помощи!"
 
 #. / "Неправильный параметр: %s"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/parseargs.c:480
+#: /home/eddy/C-files/mytakepic/fli_control/parseargs.c:480
 #, c-format
 msgid   "Wrong parameter: %s"
-msgstr  ""
+msgstr  "Неправильный параметр: %s"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:68
+#. Нельзя одновременно указывать относительную и абсолютную позицию
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:168
+msgid   "You can't use both relative and absolute position"
+msgstr  "Нельзя одновременно указывать относительную и абсолютную позицию"
+
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:71
 msgid   "close shutter"
-msgstr  ""
+msgstr  "закрыть затвор"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:94
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:98
 msgid   "configure I/O port pins to given value (decimal number, pin1 is LSB, "
         "1 == output, 0 == input)"
-msgstr  ""
+msgstr  "настроить пины порта I/O (десятичное значение, пин 1 - младший, "
+        "1 == выход, 0 == вход)"
 
 #. дата/время
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:216
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:279
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:401
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:464
 msgid   "date/time"
-msgstr  ""
+msgstr  "дата/время"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:89
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:93
 msgid   "frame X0 coordinate (-1 - all with overscan)"
-msgstr  ""
+msgstr  "X0 координата фрейма (-1 - вместе с оверсканом)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:91
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:95
 msgid   "frame X1 coordinate (-1 - all with overscan)"
-msgstr  ""
+msgstr  "X1 координата фрейма (-1 - вместе с оверсканом)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:90
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:94
 msgid   "frame Y0 coordinate (-1 - all with overscan)"
-msgstr  ""
+msgstr  "Y0 координата фрейма (-1 - вместе с оверсканом)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:92
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:96
 msgid   "frame Y1 coordinate (-1 - all with overscan)"
-msgstr  ""
+msgstr  "Y1 координата фрейма (-1 - вместе с оверсканом)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:71
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:74
 msgid   "get value of I/O port pins"
-msgstr  ""
+msgstr  "получить значение пинов порта I/O"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:84
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:88
 msgid   "horizontal binning to N pixels"
-msgstr  ""
+msgstr  "горизонтальный биннинг на N пикселей"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:77
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:81
 msgid   "instrument name"
-msgstr  ""
+msgstr  "название инструмента"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:87
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:91
 msgid   "make pause for N seconds between expositions"
-msgstr  ""
+msgstr  "пауза на N секунд между экспозициями"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:86
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:90
 msgid   "make series of N frames"
-msgstr  ""
+msgstr  "последовательность N кадров"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:66
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:99
+msgid   "move focuser to absolute position"
+msgstr  "переместить фокусер в абсолютную позицию"
+
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:100
+msgid   "move focuser to relative position"
+msgstr  "переместить фокусер в абсолютную позицию"
+
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:75
+msgid   "move stepper motor asynchronous"
+msgstr  "двигать шаговый асинхронно"
+
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:69
 msgid   "not open shutter, when exposing (\"dark frames\")"
-msgstr  ""
+msgstr  "съемка темновых"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:78
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:82
 msgid   "object name"
-msgstr  ""
+msgstr  "название объекта"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:76
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:80
 msgid   "object type (neon, object, flat etc)"
-msgstr  ""
+msgstr  "тип объекта (neon, object, flat и т.п.)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:79
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:83
 msgid   "observers' names"
-msgstr  ""
+msgstr  "имена наблюдателей"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:80
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:84
 msgid   "observing program name"
-msgstr  ""
+msgstr  "название программы"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:67
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:70
 msgid   "open shutter"
-msgstr  ""
+msgstr  "открыть затвор"
 
 #. {"fast",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G.fast),      N_("run in 8-bit mode")},
 #. {"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:75
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:79
 msgid   "program author"
-msgstr  ""
+msgstr  "автор программы"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:64
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:67
 msgid   "rewrite output file if exists"
-msgstr  ""
+msgstr  "перезаписать выходной файл"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:70
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:73
 msgid   "run exposition on HIGH @ pin5 I/O port"
-msgstr  ""
+msgstr  "запуск экспозиции при высоком сигнале на пине5 порта I/O"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:69
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:72
 msgid   "run exposition on LOW @ pin5 I/O port"
-msgstr  ""
+msgstr  "запуск экспозиции при низком сигнале на пине5 порта I/O"
 
 #. {"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:98
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:105
 msgid   "set CCD temperature to given value (degr C)"
-msgstr  ""
+msgstr  "установить температуру ПЗС (градусы Ц)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:93
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:97
 msgid   "set I/O port pins to given value (decimal number, pin1 is LSB)"
-msgstr  ""
+msgstr  "установить порт I/O в заданное значение (десятичное число, пин1 - младший)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:88
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:92
 msgid   "set exposure time to given value (ms)"
-msgstr  ""
+msgstr  "установить время экспозиции (мс)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:63
+#. {"wheel-get",NO_ARGS,   NULL,   0,      arg_none,   APTR(&G.getwheel),  N_("get current wheel position")},
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:102
+msgid   "set wheel position"
+msgstr  "установить положение колеса"
+
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:66
 msgid   "show this help"
-msgstr  ""
+msgstr  "отобразить эту справку"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:65
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:68
 msgid   "verbose level (each -v increase it)"
-msgstr  ""
+msgstr  "уровень сообщений (каждый -v повышает)"
 
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/cmdlnopts.c:85
+#: /home/eddy/C-files/mytakepic/fli_control/cmdlnopts.c:89
 msgid   "vertical binning to N pixels"
-msgstr  ""
+msgstr  "вертикальный биннинг на N пикселей"
 
 #. "ожидание внешнего триггера"
-#: /home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c:223
+#: /home/eddy/C-files/mytakepic/fli_control/main.c:408
 #, c-format
 msgid   "wait for external trigger...\n"
-msgstr  ""
+msgstr  "ожидание внешнего триггера...\n"
