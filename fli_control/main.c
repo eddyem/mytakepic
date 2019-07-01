@@ -255,7 +255,7 @@ int main(int argc, char **argv){
             if(!fli_err) printf("%ld\n", ltmp);
             usleep(50000);
         }
-        /*
+
         TRYFUNC(FLIGetActiveWheel, dev, &ltmp);
         if(!fli_err) info(_("Wheel number: %ld"), ltmp);
         TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
@@ -381,10 +381,27 @@ int main(int argc, char **argv){
         }
 
         if(G->exptime < DBL_EPSILON) continue;
+        /*
+        char str[256];
+        flimode_t m = 0;
+        int ret;
+        while((ret = FLIGetCameraModeString (dev, m, str, 255)) == 0){
+            str[255] = 0;
+            red("String %ld: %s", m, str);
+            m++;
+        }*/
+//        TRYFUNC(FLIGetCameraModeString, dev, m, str, 255);
+
         TRYFUNC(FLISetExposureTime, dev, G->exptime);
         if(G->dark) frametype = FLI_FRAME_TYPE_DARK;
         TRYFUNC(FLISetFrameType, dev, frametype);
-        //TRYFUNC(FLISetBitDepth, dev, G->fast ? FLI_MODE_8BIT : FLI_MODE_16BIT);
+        if(G->_8bit){
+            TRYFUNC(FLISetBitDepth, dev, FLI_MODE_8BIT);
+            if(fli_err == 0) green(_("8 bit mode\n"));
+        }
+        TRYFUNC(FLISetCameraMode, dev, G->fast ? 0 : 1);
+        if(G->fast) green(_("Fast readout mode\n"));
+        if(!G->outfile) red(_("Only show statistics\n"));
         img = MALLOC(uint16_t, img_rows * row_width);
         for (j = 0; j < G->nframes; j ++){
             TRYFUNC(FLIGetTemperature, dev, &G->temperature); // temperature @ exp. start
@@ -431,6 +448,7 @@ int main(int argc, char **argv){
             curtime(tm_buf);
             print_stat(img, row_width * img_rows);
             inline void WRITEIMG(int (*writefn)(char*,int,int,void*), char *ext){
+                if(G->outfile == NULL) return;
                 if(!check_filename(buff, G->outfile, ext) && !rewrite_ifexists)
                     // Не могу сохранить файл
                     WARNX(_("Can't save file"));
@@ -661,7 +679,7 @@ int writepng(char *filename, int width, int height, void *data){
         goto done;
     }
     png_init_io(pngptr, fp);
-    png_set_compression_level(pngptr, 6);
+    png_set_compression_level(pngptr, Z_BEST_COMPRESSION);
     png_set_IHDR(pngptr, infoptr, width, height, 16, PNG_COLOR_TYPE_GRAY,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
                 PNG_FILTER_TYPE_DEFAULT);

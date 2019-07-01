@@ -1,19 +1,15 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 set(PROJ fli_control)
+project(${PROJ})
 set(MINOR_VERSION "0")
 set(MID_VERSION "1")
 set(MAJOR_VERSION "0")
 set(VERSION "${MAJOR_VERSION}.${MID_VERSION}.${MINOR_VERSION}")
 
-project(${PROJ} VERSION ${PROJ_VERSION} LANGUAGES C CXX)
+message("VER: ${VERSION}")
 
 # default flags
-set(CMAKE_C_FLAGS_RELEASE "")
-set(CMAKE_C_FLAGS_DEBUG "")
-set(CMAKE_CXX_FLAGS_RELEASE "")
-set(CMAKE_CXX_FLAGS_DEBUG "")
-set(CMAKE_C_FLAGS "-O2 -std=gnu99")
-set(CMAKE_CXX_FLAGS "-O2")
+set(CFLAGS -O2 -std=gnu99)
 
 set(CMAKE_COLOR_MAKEFILE ON)
 
@@ -23,25 +19,19 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCES)
 
 # cmake -DEBUG=1 -> debugging
 if(DEFINED EBUG)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wextra -Wall -Werror -W")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra -Wall -Werror -W")
-    set(CMAKE_BUILD_TYPE DEBUG)
-    add_definitions(-DEBUG) # -DATIK_DEBUG=1)
+    set(CFLAGS ${CFLAGS} -Wextra -Wall -Werror -W)
+    add_definitions(-DEBUG)
 endif()
 
 find_package(PkgConfig REQUIRED)
-# find CFITSIO
-SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
-FIND_PACKAGE(CFITSIO REQUIRED)
-
-set(MODULES fli>=1.71)
+set(MODULES cfitsio>=3.0 fli>=1.71)
 # additional modules on condition
-if(DEFINED USE_PNG AND USE_PNG STREQUAL "yes")
+if(DEFINED USEPNG)
     set(MODULES ${MODULES} libpng>=1.2)
     add_definitions(-DUSEPNG)
 endif()
 pkg_check_modules(${PROJ} REQUIRED ${MODULES})
-if(DEFINED USE_RAW AND USE_RAW STREQUAL "yes")
+if(DEFINED USERAW)
     add_definitions(-DUSERAW)
 endif()
 
@@ -70,8 +60,8 @@ set(RU_FILE ${LCPATH}/ru.po)
 
 # exe file
 add_executable(${PROJ} ${SOURCES} ${PO_FILE} ${MO_FILE})
-target_link_libraries(${PROJ} ${${PROJ}_LIBRARIES} ${CFITSIO_LIBRARIES})
-include_directories(${${PROJ}_INCLUDE_DIRS} ${CFITSIO_INCLUDE_DIR})
+target_link_libraries(${PROJ} ${${PROJ}_LIBRARIES})
+include_directories(${${PROJ}_INCLUDE_DIRS})
 link_directories(${${PROJ}_LIBRARY_DIRS} )
 add_definitions(${CFLAGS} -DLOCALEDIR=\"${LOCALEDIR}\"
         -DPACKAGE_VERSION=\"${VERSION}\" -DGETTEXT_PACKAGE=\"${PROJ}\"

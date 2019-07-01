@@ -17,3 +17,15 @@ If you wish to save not only FITS, define:
 
 define
 *	-DEBUG=1 for debug info
+
+
+TODO:
+get/set camera readout speed with
+FLIGetCameraModeString
+FLISetCameraMode
+  /*
+   * set speed index
+   *
+   * speed index = 0 => set mode = 1 (1MHz)
+   * speed index = 1 => set mode = 0 (8MHz)
+   */

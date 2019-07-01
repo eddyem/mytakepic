@@ -1,0 +1,157 @@
+// переменные, типы
+    flidomain_t = METHOD | DEVICE;
+    // METHOD:  FLIDOMAIN_PARALLEL_PORT, FLIDOMAIN_USB, FLIDOMAIN_SERIAL, FLIDOMAIN_INET;
+    // DEVICE:  FLIDEVICE_CAMERA, FLIDEVICE_FILTERWHEEL, FLIDEVICE_FOCUSER.
+
+    fliframe_t = FLI_FRAME_TYPE_NORMAL или FLI_FRAME_TYPE_DARK.
+
+    flibitdepth_t = FLI_MODE_8BIT или FLI_MODE_16BIT.
+
+    flishutter_t =  FLI_SHUTTER_CLOSE, FLI_SHUTTER_OPEN, FLI_SHUTTER_EXTERNAL_TRIGGER,
+        FLI_SHUTTER_EXTERNAL_TRIGGER_LOW, and FLI_SHUTTER_EXTERNAL_TRIGGER HIGH.
+
+    flibgflush_t = FLI_BGFLUSH_STOP and FLI_BGFLUSH_START.
+
+    flichannel_t = FLI_TEMPERATURE_INTERNAL and FLI_TEMPERATURE_EXTERNAL.
+
+    flidebug_t = FLIDEBUG_NONE, FLIDEBUG_INFO, FLIDEBUG_WARN, and FLIDEBUG_FAIL.
+
+// функции
+
+    LIBFLIAPI FLICancelExposure(flidev_t dev); // отмена экспозиции
+    // return: 0 - успех, !0 - неудача
+
+    LIBFLIAPI FLIClose(flidev_t dev); // закрыть устройство
+
+    LIBFLIAPI FLIGetArrayArea(flidev_t dev,
+        long* ul_x, long* ul_y, long* lr_x, long* lr_y); // получить размер фрейма
+    // ul_x, ul_y - координаты верхнего левого угла
+    // lr_x, lr_y - к-ты правого нижнего угла
+
+    LIBFLIAPI FLIFlushRow(flidev_t dev, long rows, long repeat); // сброс рядов
+    // rows - кол-во рядов для сброса, repeat - сколько раз подряд сбросить
+
+    LIBFLIAPI FLIGetFWRevision(flidev_t dev, long* fwrev); // версия прошивки
+    LIBFLIAPI FLIGetHWRevision(flidev_t dev, long* hwrev); // версия железа
+    // fwrev - версия прошивки, hwrev - версия железа
+
+    LIBFLIAPI FLIGetLibVersion(char* ver, size_t len); // версия библиотеки
+    // ver - буфер для версии, len - его длина
+
+    LIBFLIAPI FLIGetModel(flidev_t dev, char* model, size_t len); // имя модели
+    // model - буфер, len - его длина
+
+    LIBFLIAPI FLIGetPixelSize(flidev_t dev,
+        double* pixel x, double* pixel y); // размер пикселя в мкм
+
+    LIBFLIAPI FLIGetVisibleArea(flidev_t dev,
+        long* ul_x, long* ul_y, long* lr_x, long* lr_y); // р-р видимой области
+    // к-ты аналогично FLIGetArrayArea
+
+    LIBFLIAPI FLIOpen(flidev_t* dev, char* name, flidomain_t domain); // открыть
+    // name - имя ищ FLIList()
+
+    LIBFLIAPI FLISetDebugLevel(char* host, flidebug_t level); // уровень отладки
+    // host игнорируется
+
+    LIBFLIAPI FLISetExposureTime(flidev_t dev, long exptime); // время экспозиции
+    // exptime - в миллисекундах
+
+    LIBFLIAPI FLISetHBin(flidev_t dev, long hbin); // гориз. биннинг
+    LIBFLIAPI FLISetVBin(flidev_t dev, long vbin); // верт. биннинг
+    // hbin = 1..16, vbin = 1..16
+
+    LIBFLIAPI FLISetFrameType(flidev_t dev, fliframe_t frametype); // темновой или обычный
+
+    LIBFLIAPI FLISetImageArea(flidev_t dev,
+        long ul_x, long ul_y, long lr_x, long lr_y); // установить область к-т
+    // lr_x = ul_x+(lrx-ul_x)/hbin;
+    // lr_y = ul_y+(lry-ul_y)/vbin;
+    // lrx, lry - абс. координаты в желаемой области
+
+    LIBFLIAPI FLIGetExposureStatus(flidev_t dev, long* timeleft);
+    // время до окончания экспозиции
+
+    LIBFLIAPI FLISetTemperature(flidev_t dev, double temperature); // задать Т
+    // temperature - в градусах Цельсия, от -55 до +45
+
+    LIBFLIAPI FLIGetTemperature(flidev_t dev, double* temperature); // узнать Т
+
+    LIBFLIAPI FLIGrabRow(flidev_t dev, void* buff, size_t width); // считать ряд
+    // buff - буфер, width - макс. ширина ряда (размер буфера)
+    // считывает очередной ряд с камеры
+
+    LIBFLIAPI FLIExposeFrame(flidev_t dev); // начать накопление
+
+    LIBFLIAPI FLISetBitDepth(flidev_t dev, flibitdepth_t bitdepth); // задать разрядность
+
+    LIBFLIAPI FLISetNFlushes(flidev_t dev, long nflushes); // задать кол-во сбросов
+    // перед экспозицией
+
+    LIBFLIAPI FLIReadIOPort(flidev_t dev, long* ioportset); // считать порт io
+    // ioportset - считанные данные
+
+    LIBFLIAPI FLIWriteIOPort(flidev_t dev, long ioportset); // записать в io
+
+    LIBFLIAPI FLIConfigureIOPort(flidev_t dev, long ioportset); // настройка
+    // функционал каждого контакта порта io зависит от значения ioportset
+    // 1 - выход, 0 - вход
+
+    LIBFLIAPI FLILockDevice(flidev_t dev); // блокировка устройства
+    // для обеспечения монопольного доступа
+    LIBFLIAPI FLIUnlockDevice(flidev_t dev);
+
+    LIBFLIAPI FLIControlShutter(flidev_t dev, flishutter_t shutter); // затвор
+    // FLI_SHUTTER_EXTERNAL_TRIGGER_LOW и FLI_SHUTTER_EXTERNAL_TRIGGER
+    //      запускают экспозицию при наличии лог. нуля на io0
+    // FLI_SHUTTER_EXTERNAL_TRIGGER_HIGH - запуск эксп. на лог1 на io0
+
+    LIBFLIAPI FLIControlBackgroundFlush(flidev_t dev, flibgflush_t bgflush);
+    // фоновый сброс
+
+    LIBFLIAPI FLIList(flidomain_t domain, char*** names);
+    // список устройств из домена domain
+    LIBFLIAPI FLIFreeList(char** names); // очистить список names
+
+    LIBFLIAPI FLISetFilterPos(flidev_t dev, long filter);
+    // установить фильтр в позицию filter
+
+    LIBFLIAPI FLIGetFilterPos(flidev_t dev, long* filter);
+    // текущее положение фильтра
+
+    LIBFLIAPI FLIGetStepsRemaining(flidev_t dev, long* steps);
+    // количество шагов, оставшихся до назначенной позиции
+
+    LIBFLIAPI FLIGetFilterCount(flidev_t dev, long* filter);
+    // узнать кол-во фильтров
+
+    LIBFLIAPI FLIStepMotorAsync(flidev_t dev, long steps);
+    LIBFLIAPI FLIStepMotor(flidev_t dev, long steps);
+    // передвинуть турель на заданное кол-во шагов
+
+    LIBFLIAPI FLIGetStepperPosition(flidev_t dev, long* position);
+    // текущее положение ШД
+
+// функции для работы с фокусирующим устройством
+    LIBFLIAPI FLIHomeFocuser(flidev_t dev);
+    LIBFLIAPI FLIGetFocuserExtent(flidev_t dev, long* extent);
+    LIBFLIAPI FLIReadTemperature(flidev_t dev, flichannel_t channel,
+        double* temperature);
+
+    LIBFLIAPI FLICreateList(flidomain_t domain); // создать список
+    LIBFLIAPI FLIDeleteList(void); // удалить список
+    LIBFLIAPI FLIListFirst(flidomain_t* domain, char* filename,
+        size_t fnlen, char* name, size_t namelen); // получить первое устройство из списка
+    // domain - домен устр-ва;
+    // filename - имя файла устр-ва;
+    // fnlen - длина буфера имени файла;
+    // name - название устр-ва;
+    // namelen - длина буфера названия
+
+    LIBFLIAPI FLIListNext(flidomain_t* domain, char* filename,
+        size_t fnlen, char* name, size_t namelen); // получить следующее устр-во
+
+
+
+
+

@@ -43,7 +43,6 @@ int rewrite_ifexists = 0, // rewrite existing files == 0 or 1
 //            DEFAULTS
 // default global parameters
 glob_pars const Gdefault = {
-    .outfile = "fli_out",
     .objtype = "object",
     .instrument = "direct imaging",
     .exptime = -1,
@@ -73,7 +72,8 @@ myoption cmdlnopts[] = {
     {"shutter-on-high",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_HIGH,arg_none,NULL, N_("run exposition on HIGH @ pin5 I/O port")},
     {"get-ioport",NO_ARGS,  NULL,   'i',    arg_int,    APTR(&G.getio),     N_("get value of I/O port pins")},
     {"async",   NO_ARGS,    &G.async,1,     arg_none,   NULL,               N_("move stepper motor asynchronous")},
-    //{"fast",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G.fast),      N_("run in 8-bit mode")},
+    {"8bit",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G._8bit),     N_("run in 8-bit mode")},
+    {"fast",    NO_ARGS,    NULL,   'F',    arg_int,    APTR(&G.fast),      N_("fast (8MHz) readout mode")},
     //{"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
 
     {"author",  NEED_ARG,   NULL,   'A',    arg_string, APTR(&G.author),    N_("program author")},

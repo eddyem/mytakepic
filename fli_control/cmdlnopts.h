@@ -45,7 +45,8 @@ typedef struct{
     int nflushes;       // amount of flushes
     int pause_len;      // pause (in seconds) between expositions
     int shtr_cmd;       // shutter command (flishutter_t)
-    int fast;           // 8bit mode
+    int _8bit;          // 8bit mode
+    int fast;           // fast (8MHz) readout mode
     int getio;          // get value of ioport
     int setio;          // set value of ioport
     int confio;         // configure ioport

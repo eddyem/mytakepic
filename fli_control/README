@@ -11,3 +11,46 @@ If you wish to save not only FITS, define (cmake -Dxxx=1):
 
 define
 *	-DEBUG=1 for debug info
+
+
+device          VID     PID
+wheel CFW1-5    0x0f18  0x0007
+Atlas focuser   0x0f18  0x0007
+
+
+
+Only focuser:
+fli_control: Library version 'Software Development Library for Linux 1.104'
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 478): No devices
+No CCD found
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 474): found: /dev/fliusb0 @ USB
+fli_control: Model:		Atlas Digital Focuser
+fli_control: Focuser '/dev/fliusb0', domain USB
+fli_control: HW revision: 0
+fli_control: SW revision: 32839
+Focuser temperature: 28.125000
+fli_control: Focuser position 105000
+fli_control: Focuser extent: 105000
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 474): found: /dev/fliusb0 @ USB
+fli_control: Wheel '/dev/fliusb0', domain USB
+fli_control: Model:		Atlas Digital Focuser
+fli_control: HW revision: 0
+fli_control: SW revision: 32839
+fli_control: Amount of positions: 0
+fli_control: Wheel position: 0
+
+
+
+Only wheel:
+fli_control: Library version 'Software Development Library for Linux 1.104'
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 478): No devices
+No CCD found
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 474): found: /dev/fliusb0 @ USB
+No focusers found
+findcams (/home/eddy/Docs/SAO/Cameras/FLI_camera/my/fli_control/main.c, line 474): found: /dev/fliusb0 @ USB
+fli_control: Wheel '/dev/fliusb0', domain USB
+fli_control: Model:		CFW-1-5
+fli_control: HW revision: 0
+fli_control: SW revision: 32768
+fli_control: Amount of positions: 5
+fli_control: Wheel position: -1
