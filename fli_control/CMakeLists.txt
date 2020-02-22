@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 set(PROJ fli_control)
 project(${PROJ})
 set(MINOR_VERSION "0")
-set(MID_VERSION "1")
+set(MID_VERSION "2")
 set(MAJOR_VERSION "0")
 set(VERSION "${MAJOR_VERSION}.${MID_VERSION}.${MINOR_VERSION}")
 
@@ -23,8 +23,10 @@ if(DEFINED EBUG)
     add_definitions(-DEBUG)
 endif()
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
+find_package(CFITSIO REQUIRED)
 find_package(PkgConfig REQUIRED)
-set(MODULES cfitsio>=3.0 fli>=1.71)
+set(MODULES fli>=1.71)
 # additional modules on condition
 if(DEFINED USEPNG)
     set(MODULES ${MODULES} libpng>=1.2)
@@ -60,7 +62,7 @@ set(RU_FILE ${LCPATH}/ru.po)
 
 # exe file
 add_executable(${PROJ} ${SOURCES} ${PO_FILE} ${MO_FILE})
-target_link_libraries(${PROJ} ${${PROJ}_LIBRARIES})
+target_link_libraries(${PROJ}  ${CFITSIO_LIBRARIES} ${${PROJ}_LIBRARIES})
 include_directories(${${PROJ}_INCLUDE_DIRS})
 link_directories(${${PROJ}_LIBRARY_DIRS} )
 add_definitions(${CFLAGS} -DLOCALEDIR=\"${LOCALEDIR}\"

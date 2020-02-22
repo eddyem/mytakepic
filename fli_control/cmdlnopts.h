@@ -56,6 +56,7 @@ typedef struct{
 //    int getwheel;       // get position of wheel
     int setwheel;       // set wheel position
     int async;          // asynchronous moving
+    char **addhdr;      // list of files from which to add header records
 } glob_pars;
 
 

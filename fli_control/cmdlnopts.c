@@ -82,6 +82,7 @@ myoption cmdlnopts[] = {
     {"object",  NEED_ARG,   NULL,   'O',    arg_string, APTR(&G.objname),   N_("object name")},
     {"obsname", NEED_ARG,   NULL,   'N',    arg_string, APTR(&G.observers), N_("observers' names")},
     {"prog-id", NEED_ARG,   NULL,   'P',    arg_string, APTR(&G.prog_id),   N_("observing program name")},
+    {"addrec",  MULT_PAR,   NULL,   'r',    arg_string, APTR(&G.addhdr),    N_("add records to header from given file[s]")},
     //{"",  NEED_ARG,   NULL,   '',    arg_string, APTR(&G.),    N_("")},
 
     {"nflushes",NEED_ARG,   NULL,   'f',    arg_int,    APTR(&G.nflushes),  N_("N flushes before exposing")},

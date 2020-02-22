@@ -48,7 +48,7 @@
 #define FLIUSB_FOCUSER_ID 0x06
 #endif
 
-long fli_err;
+static long fli_err;
 #define TRYFUNC(f, ...)             \
 do{ if((fli_err = f(__VA_ARGS__)))  \
         WARNX(#f "() failed");      \
@@ -61,27 +61,30 @@ int writepng(char *filename, int width, int height, void *data);
 #define BUFF_SIZ 4096
 
 #define TMBUFSIZ 40
-char tm_buf[TMBUFSIZ];  // buffer for string with time value
+static char tm_buf[TMBUFSIZ];  // buffer for string with time value
 
-glob_pars *G = NULL; // default parameters see in cmdlnopts.c
+static glob_pars *G = NULL; // default parameters see in cmdlnopts.c
 
-uint16_t max = 0, min = 65535; // max/min values for given image
-double avr, std; // stat values
-char *camera = NULL, viewfield[80];
-double pixX, pixY; // pixel size in um
+static uint16_t max = 0, min = 65535; // max/min values for given image
+static double avr, std; // stat values
+static char *camera = NULL, viewfield[80];
+static double pixX, pixY; // pixel size in um
 
-void print_stat(u_int16_t *img, long size);
+static void print_stat(u_int16_t *img, long size);
 
-size_t curtime(char *s_time){ // current date/time
+static size_t curtime(char *s_time){ // current date/time
     time_t tm = time(NULL);
     return strftime(s_time, TMBUFSIZ, "%d/%m/%Y,%H:%M:%S", localtime(&tm));
 }
 
-fliframe_t frametype = FLI_FRAME_TYPE_NORMAL;
-double t_ext, t_int;    // external & CCD temperatures @exp. end
-time_t expStartsAt;     // exposition start time (time_t)
+static fliframe_t frametype = FLI_FRAME_TYPE_NORMAL;
+static double t_ext, t_int;    // external & CCD temperatures @exp. end
+static time_t expStartsAt;     // exposition start time (time_t)
 
-int check_filename(char *buff, char *outfile, char *ext){
+static long filterpos = -1;    // filter position
+static long focuserpos = -1;   // focuser position
+
+static int check_filename(char *buff, char *outfile, char *ext){
     struct stat filestat;
     int num;
     for(num = 1; num < 10000; num++){
@@ -98,7 +101,7 @@ void signals(int signo){
 }
 
 extern const char *__progname;
-void info(const char *fmt, ...){
+static void info(const char *fmt, ...){
     va_list ar;
     if(!verbose) return;
     printf("%s: ", __progname);
@@ -201,13 +204,12 @@ int main(int argc, char **argv){
                 if(G->async) TRYFUNC(FLIStepMotorAsync, dev, steps);
                 else TRYFUNC(FLIStepMotor, dev, steps);
             }
-            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
-            if(!fli_err){
-                green("FOCPOS=%ld\n", ltmp);
-                curpos = ltmp;
-            }
         }while(0);
-        ;
+        TRYFUNC(FLIGetStepperPosition, dev, &focuserpos);
+        if(!fli_err){
+            green("FOCPOS=%ld\n", focuserpos);
+            curpos = focuserpos;
+        }else DBG("Error getting fpos: %ld", fli_err);
         TRYFUNC(FLIClose, dev);
     }
     if(!nfocs) WARNX(_("No focusers found"));
@@ -229,6 +231,7 @@ int main(int argc, char **argv){
         }
         info(_("Wheel '%s', domain %s"), cam[i].name, cam[i].dname);
         green("WHEELTOTALPOS=%ld\n", ltmp);
+        int wheelmaxpos = (int)ltmp - 1;
         TRYFUNC(FLIGetModel, dev, buff, BUFF_SIZ);
         // Модель:\t\t%s
         if(!fli_err) info(_("Model:\t\t%s"), buff);
@@ -264,17 +267,33 @@ int main(int argc, char **argv){
         ++nwheels;
         if(G->setwheel > -1){
             ltmp = G->setwheel;
+            if(ltmp > wheelmaxpos){
+                WARNX(_("Position is too big (max %d)"), wheelmaxpos);
+                goto closewheeldev;
+            }
             TRYFUNC(FLISetFilterPos, dev, ltmp);
             if(!fli_err) info(_("Arrive to position"));
-            long curpos = -1;
-        // this function returns -1 every connection!!!
-            TRYFUNC(FLIGetFilterPos, dev, &curpos);
-            if(!fli_err){
-                green("WHEELPOS=%ld\n", curpos);
-            }else goto closewheeldev;
         }
-        ;
-    closewheeldev:
+        // this function returns -1 every connection without SETpos!!!
+        TRYFUNC(FLIGetFilterPos, dev, &filterpos);
+        if(!fli_err && filterpos > -1){
+            green("WHEELPOS=%ld\n", filterpos);
+        }else{
+            filterpos = -1;
+        // so try to check current position by steps
+            TRYFUNC(FLIGetStepperPosition, dev, &ltmp);
+            if(ltmp < 0) ltmp = -ltmp;
+            DBG("steps: %ld", ltmp);
+            if(!fli_err){
+                int pos = (ltmp - WHEEL_POS0STPS+WHEEL_STEPPOS/2)/WHEEL_STEPPOS;
+                DBG("pos = %d", pos);
+                if(pos > -1 && pos <= wheelmaxpos){
+                    filterpos = pos;
+                    green("WHEELPOS=%ld\n", filterpos);
+                }
+            }
+        }
+closewheeldev:
         TRYFUNC(FLIClose, dev);
     }
     if(!nwheels) WARNX(_("No wheels found"));
@@ -497,7 +516,7 @@ int main(int argc, char **argv){
     return 0;
 }
 
-int findcams(flidomain_t domain, cam_t **cam){
+static int findcams(flidomain_t domain, cam_t **cam){
     char **tmplist;
     int numcams = 0;
     TRYFUNC(FLIList, domain, &tmplist);
@@ -544,7 +563,7 @@ int findcams(flidomain_t domain, cam_t **cam){
 }
 
 #ifdef USERAW
-int writeraw(char *filename, int width, int height, void *data){
+static int writeraw(char *filename, int width, int height, void *data){
     int fd, size, err;
     if ((fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC,
         S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH )) == -1){
@@ -562,12 +581,38 @@ int writeraw(char *filename, int width, int height, void *data){
 }
 #endif // USERAW
 
+/**
+ * @brief addrec - add FITS records from file
+ * @param f (i)        - FITS filename
+ * @param filename (i) - name of file
+ */
+static void addrec(fitsfile *f, char *filename){
+    FILE *fp = fopen(filename, "r");
+    if(!fp) return;
+    char buf[2*FLEN_CARD];
+    while(fgets(buf, 2*FLEN_CARD, fp)){
+        DBG("check record _%s_", buf);
+        int keytype, status = 0;
+        char newcard[FLEN_CARD], keyname[FLEN_CARD];
+        fits_parse_template(buf, newcard, &keytype, &status);
+        if(status){
+            fits_report_error(stderr, status);
+            continue;
+        }
+        DBG("reformatted to _%s_", newcard);
+        strncpy(keyname, newcard, FLEN_CARD);
+        char *eq = strchr(keyname, '='); if(eq) *eq = 0;
+        eq = strchr(keyname, ' '); if(eq) *eq = 0;
+        DBG("keyname: %s", keyname);
+        fits_update_card(f, keyname, newcard, &status);
+    }
+}
 
-int writefits(char *filename, int width, int height, void *data){
+static int writefits(char *filename, int width, int height, void *data){
     long naxes[2] = {width, height}, startTime;
     double tmp = 0.0;
     struct tm *tm_starttime;
-    char buf[80];
+    char buf[FLEN_CARD];
     time_t savetime = time(NULL);
     fitsfile *fp;
     TRYFITS(fits_create_file, &fp, filename);
@@ -596,7 +641,7 @@ int writefits(char *filename, int width, int height, void *data){
     if(G->Y0) WRITEKEY(fp, TINT, "Y0", &G->Y0, "Subframe upper border");
     if(G->exptime < 2.*DBL_EPSILON) sprintf(buf, "bias");
     else if(frametype == FLI_FRAME_TYPE_DARK) sprintf(buf, "dark");
-    else if(G->objtype) strncpy(buf, G->objtype, 80);
+    else if(G->objtype) strncpy(buf, G->objtype, FLEN_CARD-1);
     else sprintf(buf, "object");
     // IMAGETYP / object, flat, dark, bias, scan, eta, neon, push
     WRITEKEY(fp, TSTRING, "IMAGETYP", buf, "Image type");
@@ -616,15 +661,20 @@ int writefits(char *filename, int width, int height, void *data){
     tmp = (G->temperature + t_int) / 2. + 273.15;
     // CAMTEMP / Camera temperature (K)
     WRITEKEY(fp, TDOUBLE, "CAMTEMP", &tmp, "Camera temperature (K)");
-    tmp = (double)G->exptime / 1000.;
+    // WHEEL & FOCUSER positions:
+    tmp = (double)focuserpos / FOCSCALE;
+    WRITEKEY(fp, TDOUBLE, "FOCUS", &tmp, "Current focuser position, mm");
+    if(filterpos > -1)
+        WRITEKEY(fp, TINT, "FILTER", &filterpos, "Current filter number");
     // EXPTIME / actual exposition time (sec)
-    WRITEKEY(fp, TDOUBLE, "EXPTIME", &tmp, "actual exposition time (sec)");
+    tmp = (double)G->exptime / 1000.;
+    WRITEKEY(fp, TDOUBLE, "EXPTIME", &tmp, "Actual exposition time (sec)");
     // DATE / Creation date (YYYY-MM-DDThh:mm:ss, UTC)
     strftime(buf, 80, "%Y-%m-%dT%H:%M:%S", gmtime(&savetime));
     WRITEKEY(fp, TSTRING, "DATE", buf, "Creation date (YYYY-MM-DDThh:mm:ss, UTC)");
     startTime = (long)expStartsAt;
     tm_starttime = localtime(&expStartsAt);
-    strftime(buf, 80, "exposition starts at %d/%m/%Y, %H:%M:%S (local)", tm_starttime);
+    strftime(buf, 80, "Exposition start time (UNIX)", tm_starttime);
     WRITEKEY(fp, TLONG, "UNIXTIME", &startTime, buf);
     strftime(buf, 80, "%Y/%m/%d", tm_starttime);
     // DATE-OBS / DATE (YYYY/MM/DD) OF OBS.
@@ -653,13 +703,19 @@ int writefits(char *filename, int width, int height, void *data){
     if(G->author){
         WRITEKEY(fp, TSTRING, "AUTHOR", G->author, "Author of the program");
     }
+    if(G->addhdr){ // add records from files
+        char **nxtfile = G->addhdr;
+        while(*nxtfile){
+            addrec(fp, *nxtfile++);
+        }
+    }
     TRYFITS(fits_write_img, fp, TUSHORT, 1, width * height, data);
     TRYFITS(fits_close_file, fp);
     return 0;
 }
 
 #ifdef USEPNG
-int writepng(char *filename, int width, int height, void *data){
+static int writepng(char *filename, int width, int height, void *data){
     int err;
     FILE *fp = NULL;
     png_structp pngptr = NULL;
@@ -696,7 +752,7 @@ int writepng(char *filename, int width, int height, void *data){
 }
 #endif /* USEPNG */
 
-void print_stat(u_int16_t *img, long size){
+static void print_stat(u_int16_t *img, long size){
     long i, Noverld = 0L;
     double pv, sum=0., sum2=0., sz = (double)size;
     u_int16_t *ptr = img, val;

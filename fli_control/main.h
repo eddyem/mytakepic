@@ -29,11 +29,18 @@
 
 #ifdef USEPNG
 #include <png.h>
+static int writepng(char *filename, int width, int height, void *data);
 #endif /* USEPNG */
 
 #include <libfli.h>
 
 #define LIBVERSIZ 1024
+
+// wheel position in steps = WHEEL_POS0STPS + WHEEL_STEPPOS*N
+#define WHEEL_POS0STPS  (239)
+#define WHEEL_STEPPOS   (48)
+// 1mm == FOCSCALE steps of focuser
+#define FOCSCALE        (10000.)
 
 typedef struct{
     flidomain_t domain;
@@ -41,10 +48,10 @@ typedef struct{
     char *name;
 }cam_t;
 
-int findcams(flidomain_t domain, cam_t **cam);
+static int findcams(flidomain_t domain, cam_t **cam);
 
 #ifdef USERAW
-int writeraw(char *filename, int width, int height, void *data);
+static int writeraw(char *filename, int width, int height, void *data);
 #endif // USERAW
 
 #define TRYFITS(f, ...)                     \
@@ -59,7 +66,7 @@ do{ int status = 0;                             \
     fits_write_key(__VA_ARGS__, &status);       \
     if(status) fits_report_error(stderr, status);\
 }while(0)
-int writefits(char *filename, int width, int height, void *data);
+static int writefits(char *filename, int width, int height, void *data);
 
 
 #endif // __MAIN_H__
