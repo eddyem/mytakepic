@@ -23,7 +23,7 @@
 #ifndef __CMDLNOPTS_H__
 #define __CMDLNOPTS_H__
 
-#include "parseargs.h"
+#include <usefull_macros.h>
 
 /*
  * here are some typedef's for global data
@@ -53,16 +53,19 @@ typedef struct{
     double temperature; // temperature of CCD
     int gotopos;        // move stepper motor of focuser to absolute position
     int addsteps;       // move stepper motor of focuser to relative position
-//    int getwheel;       // get position of wheel
     int setwheel;       // set wheel position
     int async;          // asynchronous moving
+    int verbose;        // each '-V' increases it
+    int rewrite;        // rewrite file
+    int showimage;      // show image preview
     char **addhdr;      // list of files from which to add header records
 } glob_pars;
 
 
 // default & global parameters
 extern glob_pars const Gdefault;
-extern int rewrite_ifexists, verbose;
+extern glob_pars  *GP;
 
 glob_pars *parse_args(int argc, char **argv);
+void verbose(int levl, const char *fmt, ...);
 #endif // __CMDLNOPTS_H__

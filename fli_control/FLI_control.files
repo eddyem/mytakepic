@@ -1,0 +1,13 @@
+cmdlnopts.c
+cmdlnopts.h
+events.c
+events.h
+flifunc.c
+flifunc.h
+imageview.c
+imageview.h
+main.c
+parseargs.c
+parseargs.h
+usefull_macros.c
+usefull_macros.h

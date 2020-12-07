@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-22 20:05+0300\n"
+"POT-Creation-Date: 2020-12-07 19:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,433 +17,358 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:65
+#: cmdlnopts.c:66
 msgid "show this help"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:66
+#: cmdlnopts.c:67
 msgid "rewrite output file if exists"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:67
+#: cmdlnopts.c:68
 msgid "verbose level (each -v increase it)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:68
+#: cmdlnopts.c:69
 msgid "not open shutter, when exposing (\"dark frames\")"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:69
-msgid "open shutter"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:70
-msgid "close shutter"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:71
-msgid "run exposition on LOW @ pin5 I/O port"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:72
-msgid "run exposition on HIGH @ pin5 I/O port"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:73
-msgid "get value of I/O port pins"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:74
-msgid "move stepper motor asynchronous"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:75
+#: cmdlnopts.c:70
 msgid "run in 8-bit mode"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:76
+#: cmdlnopts.c:71
 msgid "fast (8MHz) readout mode"
 msgstr ""
 
-#. {"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:79
+#: cmdlnopts.c:72
+msgid "set CCD temperature to given value (degr C)"
+msgstr ""
+
+#: cmdlnopts.c:74
 msgid "program author"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:80
+#: cmdlnopts.c:75
 msgid "object type (neon, object, flat etc)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:81
+#: cmdlnopts.c:76
 msgid "instrument name"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:82
+#: cmdlnopts.c:77
 msgid "object name"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:83
+#: cmdlnopts.c:78
 msgid "observers' names"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:84
+#: cmdlnopts.c:79
 msgid "observing program name"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:85
+#: cmdlnopts.c:80
 msgid "add records to header from given file[s]"
 msgstr ""
 
-#. {"",  NEED_ARG,   NULL,   '',    arg_string, APTR(&G.),    N_("")},
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:88
+#: cmdlnopts.c:82
 msgid "N flushes before exposing"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:89
+#: cmdlnopts.c:83
 msgid "horizontal binning to N pixels"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:90
+#: cmdlnopts.c:84
 msgid "vertical binning to N pixels"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:91
+#: cmdlnopts.c:85
 msgid "make series of N frames"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:92
+#: cmdlnopts.c:86
 msgid "make pause for N seconds between expositions"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:93
+#: cmdlnopts.c:87
 msgid "set exposure time to given value (ms)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:94
+#: cmdlnopts.c:88
 msgid "frame X0 coordinate (-1 - all with overscan)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:95
+#: cmdlnopts.c:89
 msgid "frame Y0 coordinate (-1 - all with overscan)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:96
+#: cmdlnopts.c:90
 msgid "frame X1 coordinate (-1 - all with overscan)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:97
+#: cmdlnopts.c:91
 msgid "frame Y1 coordinate (-1 - all with overscan)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:98
+#: cmdlnopts.c:93
+msgid "open shutter"
+msgstr ""
+
+#: cmdlnopts.c:94
+msgid "close shutter"
+msgstr ""
+
+#: cmdlnopts.c:95
+msgid "run exposition on LOW @ pin5 I/O port"
+msgstr ""
+
+#: cmdlnopts.c:96
+msgid "run exposition on HIGH @ pin5 I/O port"
+msgstr ""
+
+#: cmdlnopts.c:97
+msgid "get value of I/O port pins"
+msgstr ""
+
+#: cmdlnopts.c:98
+msgid "move stepper motor asynchronous"
+msgstr ""
+
+#: cmdlnopts.c:100
 msgid "set I/O port pins to given value (decimal number, pin1 is LSB)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:99
+#: cmdlnopts.c:101
 msgid ""
 "configure I/O port pins to given value (decimal number, pin1 is LSB, 1 == "
 "output, 0 == input)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:100
+#: cmdlnopts.c:103
 msgid "move focuser to absolute position"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:101
+#: cmdlnopts.c:104
 msgid "move focuser to relative position"
 msgstr ""
 
-#. {"wheel-get",NO_ARGS,   NULL,   0,      arg_none,   APTR(&G.getwheel),  N_("get current wheel position")},
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:103
+#: cmdlnopts.c:106
 msgid "set wheel position"
 msgstr ""
 
-#. {"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
-#: /home/eddy/Doc/FLI/fli_control/cmdlnopts.c:106
-msgid "set CCD temperature to given value (degr C)"
+#: cmdlnopts.c:109
+msgid "Display image in OpenGL window"
 msgstr ""
 
 #. Версия библиотеки '%s'
-#: /home/eddy/Doc/FLI/fli_control/main.c:130
+#: flifunc.c:123
 #, c-format
 msgid "Library version '%s'"
 msgstr ""
 
+#. Статистика по изображению:\n
+#: flifunc.c:188
+#, c-format
+msgid "Image stat:\n"
+msgstr ""
+
 #. Модель:\t\t%s
-#: /home/eddy/Doc/FLI/fli_control/main.c:146
-#: /home/eddy/Doc/FLI/fli_control/main.c:237
-#: /home/eddy/Doc/FLI/fli_control/main.c:318
+#: flifunc.c:215 flifunc.c:312 flifunc.c:434
 #, c-format
 msgid "Model:\t\t%s"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:149
+#: flifunc.c:218
 #, c-format
 msgid "Focuser '%s', domain %s"
 msgstr ""
 
 #. Апп. версия: %ld
-#: /home/eddy/Doc/FLI/fli_control/main.c:152
-#: /home/eddy/Doc/FLI/fli_control/main.c:240
-#: /home/eddy/Doc/FLI/fli_control/main.c:322
+#: flifunc.c:221 flifunc.c:315 flifunc.c:438
 #, c-format
 msgid "HW revision: %ld"
 msgstr ""
 
 #. Прогр. версия: %ld
-#: /home/eddy/Doc/FLI/fli_control/main.c:155
-#: /home/eddy/Doc/FLI/fli_control/main.c:243
-#: /home/eddy/Doc/FLI/fli_control/main.c:325
+#: flifunc.c:224 flifunc.c:318 flifunc.c:441
 #, c-format
 msgid "SW revision: %ld"
 msgstr ""
 
 #. Нельзя одновременно указывать относительную и абсолютную позицию
-#: /home/eddy/Doc/FLI/fli_control/main.c:171
+#: flifunc.c:240
 msgid "You can't use both relative and absolute position"
 msgstr ""
 
 #. Ошибка определения позиции
-#: /home/eddy/Doc/FLI/fli_control/main.c:176
+#: flifunc.c:245
 msgid "Error in position detection"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:188
+#: flifunc.c:257
 msgid "Already at position"
 msgstr ""
 
 #. Позиция не должна выходить за пределы 0...%ld
-#: /home/eddy/Doc/FLI/fli_control/main.c:193
+#: flifunc.c:262
 #, c-format
 msgid "Position should be in 0...%ld"
 msgstr ""
 
 #. Перемещение в нулевую позицию
-#: /home/eddy/Doc/FLI/fli_control/main.c:198
+#: flifunc.c:267
 msgid "Moving to home position"
 msgstr ""
 
 #. Перемещение на %ld шагов
-#: /home/eddy/Doc/FLI/fli_control/main.c:203
+#: flifunc.c:272
 #, c-format
 msgid "Moving for %ld steps"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:215
+#: flifunc.c:284
 msgid "No focusers found"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:232
+#: flifunc.c:307
 #, c-format
 msgid "Wheel '%s', domain %s"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:247
+#: flifunc.c:322
 #, c-format
 msgid "Wheel position should be from 0 to %ld"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:271
+#: flifunc.c:328
 #, c-format
 msgid "Position is too big (max %d)"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:275
+#: flifunc.c:332
 msgid "Arrive to position"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:299
+#: flifunc.c:356
 msgid "No wheels found"
 msgstr ""
 
-#: /home/eddy/Doc/FLI/fli_control/main.c:307
-msgid "No CCD found"
-msgstr ""
-
-#. Камера '%s' из домена %s
-#: /home/eddy/Doc/FLI/fli_control/main.c:313
-#, c-format
-msgid "Camera '%s', domain %s"
-msgstr ""
-
-#. Размер пикселя: %g x %g
-#: /home/eddy/Doc/FLI/fli_control/main.c:328
-#, c-format
-msgid "Pixel size: %g x %g"
-msgstr ""
-
-#. Видимое поле: %s
-#: /home/eddy/Doc/FLI/fli_control/main.c:332
-#, c-format
-msgid "Field of view: %s"
-msgstr ""
-
-#. Поле изображения: (%ld, %ld)(%ld, %ld)
-#: /home/eddy/Doc/FLI/fli_control/main.c:337
-#, c-format
-msgid "Array field: (%ld, %ld)(%ld, %ld)"
-msgstr ""
-
-#. "Установка температуры ПЗС: %g градусов Цельсия\n"
-#: /home/eddy/Doc/FLI/fli_control/main.c:351
-#, c-format
-msgid "Set CCD temperature to %g degr.C\n"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/main.c:377
-#, c-format
-msgid "%s CCD shutter\n"
-msgstr ""
-
-#. "Попытка сконфигурировать порт I/O как %d\n"
-#: /home/eddy/Doc/FLI/fli_control/main.c:388
-#, c-format
-msgid "Try to convfigure I/O port as %d\n"
-msgstr ""
-
-#. "Попытка записи %d в порт I/O\n"
-#: /home/eddy/Doc/FLI/fli_control/main.c:398
-#, c-format
-msgid "Try to write %d to I/O port\n"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/main.c:419
-msgid "8 bit mode\n"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/main.c:422
-msgid "Fast readout mode\n"
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/main.c:423
-msgid "Only show statistics\n"
-msgstr ""
-
-#. Захват кадра %d\n
-#: /home/eddy/Doc/FLI/fli_control/main.c:429
-#, c-format
-msgid "Capture frame %d\n"
-msgstr ""
-
 #. дата/время
-#: /home/eddy/Doc/FLI/fli_control/main.c:437
-#: /home/eddy/Doc/FLI/fli_control/main.c:501
+#: flifunc.c:378 flifunc.c:565
 msgid "date/time"
 msgstr ""
 
 #. "ожидание внешнего триггера"
-#: /home/eddy/Doc/FLI/fli_control/main.c:444
+#: flifunc.c:385
 #, c-format
 msgid "wait for external trigger...\n"
 msgstr ""
 
 #. %.3f секунд до окончания экспозиции\n
-#: /home/eddy/Doc/FLI/fli_control/main.c:448
+#: flifunc.c:389
 #, c-format
 msgid "%.3f seconds till exposition ends\n"
 msgstr ""
 
 #. Считывание изображения:
-#: /home/eddy/Doc/FLI/fli_control/main.c:454
+#: flifunc.c:395
 #, c-format
 msgid "Read image: "
 msgstr ""
 
-#. Не могу сохранить файл
-#: /home/eddy/Doc/FLI/fli_control/main.c:473
-msgid "Can't save file"
+#: flifunc.c:425
+msgid "No CCD found"
 msgstr ""
 
-#. Файл записан в '%s'
-#: /home/eddy/Doc/FLI/fli_control/main.c:482
+#. Камера '%s' из домена %s
+#: flifunc.c:429
 #, c-format
-msgid "File saved as '%s'"
+msgid "Camera '%s', domain %s"
+msgstr ""
+
+#. Размер пикселя: %g x %g
+#: flifunc.c:444
+#, c-format
+msgid "Pixel size: %g x %g"
+msgstr ""
+
+#. Видимое поле: %s
+#: flifunc.c:448
+#, c-format
+msgid "Field of view: %s"
+msgstr ""
+
+#. Поле изображения: (%ld, %ld)(%ld, %ld)
+#: flifunc.c:453
+#, c-format
+msgid "Array field: (%ld, %ld)(%ld, %ld)"
+msgstr ""
+
+#. "Установка температуры ПЗС: %g градусов Цельсия\n"
+#: flifunc.c:467
+#, c-format
+msgid "Set CCD temperature to %g degr.C\n"
+msgstr ""
+
+#: flifunc.c:493
+#, c-format
+msgid "%s CCD shutter\n"
+msgstr ""
+
+#. "Попытка сконфигурировать порт I/O как %d\n"
+#: flifunc.c:498
+#, c-format
+msgid "Try to convfigure I/O port as %d\n"
+msgstr ""
+
+#. "Попытка записи %d в порт I/O\n"
+#: flifunc.c:508
+#, c-format
+msgid "Try to write %d to I/O port\n"
+msgstr ""
+
+#: flifunc.c:518
+msgid "8 bit mode\n"
+msgstr ""
+
+#: flifunc.c:521
+msgid "Fast readout mode\n"
+msgstr ""
+
+#: flifunc.c:522
+msgid "Only show statistics\n"
+msgstr ""
+
+#. Захват кадра %d\n
+#: flifunc.c:528
+#, c-format
+msgid "Capture frame %d\n"
 msgstr ""
 
 #. %d секунд до окончания паузы\n
-#: /home/eddy/Doc/FLI/fli_control/main.c:496
+#: flifunc.c:560
 #, c-format
 msgid "%d seconds till pause ends\n"
 msgstr ""
 
-#. Статистика по изображению:\n
-#: /home/eddy/Doc/FLI/fli_control/main.c:770
+#. Не могу сохранить файл
+#: flifunc.c:605
+msgid "Can't save file"
+msgstr ""
+
+#. Файл записан в '%s'
+#: flifunc.c:615
 #, c-format
-msgid "Image stat:\n"
+msgid "File saved as '%s'"
 msgstr ""
 
-#. amount of pcount and/or scount wrong
-#. / "Неправильный формат строки помощи"
-#: /home/eddy/Doc/FLI/fli_control/parseargs.c:56
-msgid "Wrong helpstring!"
+#: imageview.c:257
+msgid "Can't init mutex!"
 msgstr ""
 
-#. / "Целое вне допустимого диапазона"
-#: /home/eddy/Doc/FLI/fli_control/parseargs.c:86
-msgid "Integer out of range"
-msgstr ""
-
-#. / "Неправильный параметр: %s"
-#: /home/eddy/Doc/FLI/fli_control/parseargs.c:480
-#, c-format
-msgid "Wrong parameter: %s"
-msgstr ""
-
-#. / "%s: необходим аргумент!"
-#: /home/eddy/Doc/FLI/fli_control/parseargs.c:485
-#, c-format
-msgid "%s: argument needed!"
-msgstr ""
-
-#. / "Неправильный аргумент \"%s\" параметра \"%s\""
-#: /home/eddy/Doc/FLI/fli_control/parseargs.c:490
-#, c-format
-msgid "Wrong argument \"%s\" of parameter \"%s\""
-msgstr ""
-
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:173
-msgid "No filename given!"
-msgstr ""
-
-#. / "Не могу открыть %s для чтения"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:178
-#, c-format
-msgid "Can't open %s for reading"
-msgstr ""
-
-#. / "Не могу выполнить stat %s"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:183
-#, c-format
-msgid "Can't stat %s"
-msgstr ""
-
-#. / "Ошибка mmap"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:190
-msgid "Mmap error for input"
-msgstr ""
-
-#. / "Не могу закрыть mmap'нутый файл"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:195
-msgid "Can't close mmap'ed file"
-msgstr ""
-
-#. / "Не могу munmap"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:205
-msgid "Can't munmap"
-msgstr ""
-
-#. / "Не могу настроить консоль"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:231
-msgid "Can't setup console"
-msgstr ""
-
-#. Get settings
-#. / "Не могу получить настройки"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:301
-msgid "Can't get settings"
-msgstr ""
-
-#. / "Не могу установить настройки"
-#: /home/eddy/Doc/FLI/fli_control/usefull_macros.c:312
-msgid "Can't set settings"
+#: imageview.c:275
+msgid "Already initialized!"
 msgstr ""

@@ -19,12 +19,14 @@
  * MA 02110-1301, USA.
  */
 #include <assert.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
 #include <math.h>
 #include <limits.h>
 #include <libfli.h>
+
 #include "cmdlnopts.h"
 #include "usefull_macros.h"
 
@@ -37,9 +39,8 @@
  */
 static int help;
 static glob_pars  G;
+glob_pars *GP = NULL;
 
-int rewrite_ifexists = 0, // rewrite existing files == 0 or 1
-    verbose = 0; // each -v increments this value, e.g. -vvv sets it to 3
 //            DEFAULTS
 // default global parameters
 glob_pars const Gdefault = {
@@ -63,18 +64,12 @@ glob_pars const Gdefault = {
 */
 myoption cmdlnopts[] = {
     {"help",    NO_ARGS,    &help,   1,     arg_none,   NULL,               N_("show this help")},
-    {"force",   NO_ARGS,    &rewrite_ifexists,1,arg_none,NULL,              N_("rewrite output file if exists")},
-    {"verbose", NO_ARGS,    NULL,   'V',    arg_none,   APTR(&verbose),     N_("verbose level (each -v increase it)")},
+    {"rewrite", NO_ARGS,    &G.rewrite,1,   arg_none,   NULL,               N_("rewrite output file if exists")},
+    {"verbose", NO_ARGS,    NULL,   'V',    arg_none,   APTR(&G.verbose),   N_("verbose level (each -v increase it)")},
     {"dark",    NO_ARGS,    NULL,   'd',    arg_int,    APTR(&G.dark),      N_("not open shutter, when exposing (\"dark frames\")")},
-    {"open-shutter",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_OPEN,arg_none,NULL,     N_("open shutter")},
-    {"close-shutter",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_CLOSE,arg_none,NULL,   N_("close shutter")},
-    {"shutter-on-low",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_LOW,arg_none,NULL,   N_("run exposition on LOW @ pin5 I/O port")},
-    {"shutter-on-high",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_HIGH,arg_none,NULL, N_("run exposition on HIGH @ pin5 I/O port")},
-    {"get-ioport",NO_ARGS,  NULL,   'i',    arg_int,    APTR(&G.getio),     N_("get value of I/O port pins")},
-    {"async",   NO_ARGS,    &G.async,1,     arg_none,   NULL,               N_("move stepper motor asynchronous")},
     {"8bit",    NO_ARGS,    NULL,   '8',    arg_int,    APTR(&G._8bit),     N_("run in 8-bit mode")},
     {"fast",    NO_ARGS,    NULL,   'F',    arg_int,    APTR(&G.fast),      N_("fast (8MHz) readout mode")},
-    //{"",  NO_ARGS,    NULL,   '',    arg_int,  APTR(&G.),    N_("")},
+    {"set-temp",NEED_ARG,   NULL,   't',    arg_double, APTR(&G.temperature),N_("set CCD temperature to given value (degr C)")},
 
     {"author",  NEED_ARG,   NULL,   'A',    arg_string, APTR(&G.author),    N_("program author")},
     {"objtype", NEED_ARG,   NULL,   'Y',    arg_string, APTR(&G.objtype),   N_("object type (neon, object, flat etc)")},
@@ -83,7 +78,6 @@ myoption cmdlnopts[] = {
     {"obsname", NEED_ARG,   NULL,   'N',    arg_string, APTR(&G.observers), N_("observers' names")},
     {"prog-id", NEED_ARG,   NULL,   'P',    arg_string, APTR(&G.prog_id),   N_("observing program name")},
     {"addrec",  MULT_PAR,   NULL,   'r',    arg_string, APTR(&G.addhdr),    N_("add records to header from given file[s]")},
-    //{"",  NEED_ARG,   NULL,   '',    arg_string, APTR(&G.),    N_("")},
 
     {"nflushes",NEED_ARG,   NULL,   'f',    arg_int,    APTR(&G.nflushes),  N_("N flushes before exposing")},
     {"hbin",    NEED_ARG,   NULL,   'h',    arg_int,    APTR(&G.hbin),      N_("horizontal binning to N pixels")},
@@ -95,15 +89,25 @@ myoption cmdlnopts[] = {
     {"Y0",      NEED_ARG,   NULL,   0,      arg_int,    APTR(&G.Y0),        N_("frame Y0 coordinate (-1 - all with overscan)")},
     {"X1",      NEED_ARG,   NULL,   0,      arg_int,    APTR(&G.X1),        N_("frame X1 coordinate (-1 - all with overscan)")},
     {"Y1",      NEED_ARG,   NULL,   0,      arg_int,    APTR(&G.Y1),        N_("frame Y1 coordinate (-1 - all with overscan)")},
+
+    {"open-shutter",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_OPEN,arg_none,NULL,     N_("open shutter")},
+    {"close-shutter",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_CLOSE,arg_none,NULL,   N_("close shutter")},
+    {"shutter-on-low",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_LOW,arg_none,NULL,   N_("run exposition on LOW @ pin5 I/O port")},
+    {"shutter-on-high",NO_ARGS,&G.shtr_cmd,FLI_SHUTTER_EXTERNAL_EXPOSURE_CONTROL|FLI_SHUTTER_EXTERNAL_TRIGGER_HIGH,arg_none,NULL, N_("run exposition on HIGH @ pin5 I/O port")},
+    {"get-ioport",NO_ARGS,  NULL,   'i',    arg_int,    APTR(&G.getio),     N_("get value of I/O port pins")},
+    {"async",   NO_ARGS,    &G.async,1,     arg_none,   NULL,               N_("move stepper motor asynchronous")},
+
     {"set-ioport",NEED_ARG, NULL,   's',    arg_int,    APTR(&G.setio),     N_("set I/O port pins to given value (decimal number, pin1 is LSB)")},
     {"conf-ioport",NEED_ARG,NULL,   'c',    arg_int,    APTR(&G.confio),    N_("configure I/O port pins to given value (decimal number, pin1 is LSB, 1 == output, 0 == input)")},
+
     {"goto",    NEED_ARG,   NULL,   'g',    arg_int,    APTR(&G.gotopos),   N_("move focuser to absolute position")},
     {"addsteps",NEED_ARG,   NULL,   'a',    arg_int,    APTR(&G.addsteps),  N_("move focuser to relative position")},
-//    {"wheel-get",NO_ARGS,   NULL,   0,      arg_none,   APTR(&G.getwheel),  N_("get current wheel position")},
-    {"wheel-set",NEED_ARG,  NULL,   'w',    arg_int,    APTR(&G.setwheel),  N_("set wheel position")},
-    //{"",  NEED_ARG,   NULL,   '',    arg_int,   APTR(&G.),    N_("")},
 
-    {"set-temp",NEED_ARG,   NULL,   't',    arg_double, APTR(&G.temperature),N_("set CCD temperature to given value (degr C)")},
+    {"wheel-set",NEED_ARG,  NULL,   'w',    arg_int,    APTR(&G.setwheel),  N_("set wheel position")},
+
+#ifdef IMAGEVIEW
+    {"display", NO_ARGS,    NULL,   'D',    arg_int,   APTR(&G.showimage),  N_("Display image in OpenGL window")},
+#endif
     //{"",  NEED_ARG,   NULL,   '',    arg_double,   APTR(&G.),    N_("")},
 
     end_option
@@ -133,6 +137,21 @@ glob_pars *parse_args(int argc, char **argv){
                 printf("\t%4d: %s\n", i, argv[i]);
         }
     }
-    return &G;
+    GP = &G;
+    return GP;
 }
 
+/**
+ * @brief verbose - print additional messages depending of G.verbose
+ * @param levl - message level
+ * @param fmt  - message
+ */
+void verbose(int levl, const char *fmt, ...){
+    va_list ar;
+    if(levl > G.verbose) return;
+    printf("%s: ", __progname);
+    va_start(ar, fmt);
+    vprintf(fmt, ar);
+    va_end(ar);
+    printf("\n");
+}

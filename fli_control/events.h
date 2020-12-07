@@ -1,8 +1,7 @@
 /*
- *                                                                                                  geany_encoding=koi8-r
- * main.c
+ * events.h
  *
- * Copyright 2017 Edward V. Emelianov <eddy@sao.ru, edward.emelianoff@gmail.com>
+ * Copyright 2015 Edward V. Emelianov <eddy@sao.ru, edward.emelianoff@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,36 +17,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 
+#pragma once
+#ifndef __EVENTS_H__
+#define __EVENTS_H__
+
+#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <time.h>
-#include <unistd.h>
-#include <usefull_macros.h>
+#include <GL/glut.h>
+#include <GL/glext.h>
+#include <GL/freeglut.h>
 
-#include "cmdlnopts.h"
-#include "flifunc.h"
-#ifdef IMAGEVIEW
-#include "imageview.h"
-#endif
+extern float Z; // координата Z (zoom)
 
-void signals(int signo){
-    exit(signo);
-}
+void keyPressed(unsigned char key, int x, int y);
+//void keySpPressed(int key, int x, int y);
+void mousePressed(int key, int state, int x, int y);
+void mouseMove(int x, int y);
+void createMenu();
+void menuEvents(int opt);
+//void mouseWheel(int button, int dir, int x, int y);
 
-extern const char *__progname;
-
-int main(int argc, char **argv){
-    initial_setup();
-    parse_args(argc, argv);
-    if(fli_init()) return 1;
-    focusers();
-    wheels();
-    ccds();
-    return 0;
-}
-
+#endif // __EVENTS_H__

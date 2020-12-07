@@ -2,39 +2,48 @@ cmake_minimum_required(VERSION 2.8)
 set(PROJ fli_control)
 project(${PROJ})
 set(MINOR_VERSION "0")
-set(MID_VERSION "2")
-set(MAJOR_VERSION "0")
+set(MID_VERSION "0")
+set(MAJOR_VERSION "1")
 set(VERSION "${MAJOR_VERSION}.${MID_VERSION}.${MINOR_VERSION}")
 
 message("VER: ${VERSION}")
 
 # default flags
-set(CFLAGS -O2 -std=gnu99)
+set(CFLAGS ${CFLAGS} -O2 -std=gnu99)
+add_definitions(-D_XOPEN_SOURCE=666 -D_DEFAULT_SOURCE -D_GNU_SOURCE)
 
 set(CMAKE_COLOR_MAKEFILE ON)
 
-# here is one of two variants: all .c in directory or .c files in list
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCES)
-#set(SOURCES list_of_c_files)
+set(SOURCES main.c cmdlnopts.c flifunc.c)
 
-# cmake -DEBUG=1 -> debugging
-if(DEFINED EBUG)
+# cmake -DDEBUG=yes -> debugging
+if(DEFINED DEBUG AND DEBUG STREQUAL "yes")
     set(CFLAGS ${CFLAGS} -Wextra -Wall -Werror -W)
     add_definitions(-DEBUG)
+    set(CMAKE_VERBOSE_MAKEFILE "ON")
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
 find_package(CFITSIO REQUIRED)
 find_package(PkgConfig REQUIRED)
-set(MODULES fli>=1.71)
+set(MODULES fli>=1.71 usefull_macros)
 # additional modules on condition
-if(DEFINED USEPNG)
+if(DEFINED USEPNG AND USEPNG STREQUAL "yes")
     set(MODULES ${MODULES} libpng>=1.2)
     add_definitions(-DUSEPNG)
 endif()
 pkg_check_modules(${PROJ} REQUIRED ${MODULES})
-if(DEFINED USERAW)
+if(DEFINED USERAW AND USERAW STREQUAL "yes")
     add_definitions(-DUSERAW)
+endif()
+if(DEFINED IMAGEVIEW AND IMAGEVIEW STREQUAL "yes")
+    list(APPEND SOURCES events.c imageview.c)
+    find_package(OpenGL REQUIRED)
+    find_package(GLUT REQUIRED)
+    find_package(X11 REQUIRED)
+    find_package(Threads REQUIRED)
+    list(APPEND ${PROJ}_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
+    add_definitions(-DIMAGEVIEW)
 endif()
 
 # change wrong behaviour with install prefix
@@ -48,7 +57,7 @@ message("Install dir prefix: ${CMAKE_INSTALL_PREFIX}")
 set(LCPATH ${CMAKE_SOURCE_DIR}/locale/ru)
 
 if(NOT DEFINED LOCALEDIR)
-    if(DEFINED DEBUG)
+    if(DEFINED DEBUG AND DEBUG STREQUAL "yes")
         set(LOCALEDIR ${CMAKE_CURRENT_SOURCE_DIR}/locale)
     else()
         set(LOCALEDIR ${CMAKE_INSTALL_PREFIX}/share/locale)
@@ -62,8 +71,8 @@ set(RU_FILE ${LCPATH}/ru.po)
 
 # exe file
 add_executable(${PROJ} ${SOURCES} ${PO_FILE} ${MO_FILE})
-target_link_libraries(${PROJ}  ${CFITSIO_LIBRARIES} ${${PROJ}_LIBRARIES})
-include_directories(${${PROJ}_INCLUDE_DIRS})
+target_link_libraries(${PROJ} ${CFITSIO_LIBRARIES} ${X11_LIBRARIES} ${OPENGL_LIBRARIES} ${GLUT_LIBRARIES} ${${PROJ}_LIBRARIES} -lm)
+include_directories(${${PROJ}_INCLUDE_DIRS} image_view_module)
 link_directories(${${PROJ}_LIBRARY_DIRS} )
 add_definitions(${CFLAGS} -DLOCALEDIR=\"${LOCALEDIR}\"
         -DPACKAGE_VERSION=\"${VERSION}\" -DGETTEXT_PACKAGE=\"${PROJ}\"
@@ -71,12 +80,8 @@ add_definitions(${CFLAGS} -DLOCALEDIR=\"${LOCALEDIR}\"
         -DMAJOR_VERSION=\"${MAJOR_VESION}\")
 
 # Installation of the program
-if(NOT DEFINED DEBUG)
-    INSTALL(FILES ${MO_FILE} DESTINATION "share/locale/ru/LC_MESSAGES")
-    INSTALL(TARGETS ${PROJ} DESTINATION "bin")
-else()
-    install(CODE "MESSAGE(\"Don't install in DEBUG mode! First run cmake without -DEBUG defined.\")")
-endif(NOT DEFINED DEBUG)
+INSTALL(FILES ${MO_FILE} DESTINATION "share/locale/ru/LC_MESSAGES")
+INSTALL(TARGETS ${PROJ} DESTINATION "bin")
 
 find_package(Gettext REQUIRED)
 find_program(GETTEXT_XGETTEXT_EXECUTABLE xgettext)
